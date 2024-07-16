@@ -1,8 +1,10 @@
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:workout_tracker/pages/foodpage.dart';
 import 'package:workout_tracker/pages/homepage.dart';
 import 'package:workout_tracker/pages/profilepage.dart';
 import 'package:workout_tracker/pages/stresspage.dart';
+import 'package:workout_tracker/utilities/custom_navigation_bar.dart';
 
 void main() {
   runApp(MyApp());
@@ -47,30 +49,58 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: _pages[_selectedIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.food_bank),
-            label: 'Food',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.group_add_sharp),
-            label: 'Stress',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
-          ),
+      bottomNavigationBar: CustomNavigationBar(
+        selectedIndex: _selectedIndex,
+        items: const <Widget>[
+          Icon(Icons.home),
+          Icon(Icons.food_bank),
+          Icon(Icons.group_add_sharp),
+          Icon(Icons.person)
         ],
-        currentIndex: _selectedIndex,
-        unselectedItemColor: Colors.grey,
-        selectedItemColor: Colors.blue,
         onTap: _onItemTapped,
       ),
     );
+
+    // return Scaffold(
+    //   body: _pages[_selectedIndex],
+    //   bottomNavigationBar: CurvedNavigationBar(
+    //     items: const <Widget>[
+    //       Icon(Icons.home),
+    //       Icon(Icons.food_bank),
+    //       Icon(Icons.group_add_sharp),
+    //       Icon(Icons.person)
+    //     ],
+    //     onTap: _onItemTapped,
+    //     backgroundColor: Colors.grey,
+    //   ),
+    // );
+
+    // return Scaffold(
+    //   body: _pages[_selectedIndex],
+    //   bottomNavigationBar: BottomNavigationBar(
+    //     items: const <BottomNavigationBarItem>[
+    //       BottomNavigationBarItem(
+    //         icon: Icon(Icons.home),
+    //         label: 'Home',
+    //       ),
+    //       BottomNavigationBarItem(
+    //         icon: Icon(Icons.food_bank),
+    //         label: 'Food',
+    //       ),
+    //       BottomNavigationBarItem(
+    //         icon: Icon(Icons.group_add_sharp),
+    //         label: 'Stress',
+    //       ),
+    //       BottomNavigationBarItem(
+    //         icon: Icon(Icons.person),
+    //         label: 'Profile',
+    //       ),
+    //     ],
+    //     currentIndex: _selectedIndex,
+    //     unselectedItemColor: Colors.grey,
+    //     selectedItemColor: Colors.blue,
+    //     onTap: _onItemTapped,
+    //   ),
+    // );
   }
 }
