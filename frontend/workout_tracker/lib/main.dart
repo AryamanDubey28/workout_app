@@ -51,56 +51,14 @@ class _MyHomePageState extends State<MyHomePage> {
       body: _pages[_selectedIndex],
       bottomNavigationBar: CustomNavigationBar(
         selectedIndex: _selectedIndex,
-        items: const <Widget>[
-          Icon(Icons.home),
-          Icon(Icons.food_bank),
-          Icon(Icons.group_add_sharp),
-          Icon(Icons.person)
+        items: const <String>[
+          'assets/images/home.png',
+          'assets/images/food.png',
+          'assets/images/stress.png',
+          'assets/images/profile.png',
         ],
         onTap: _onItemTapped,
       ),
     );
-
-    // return Scaffold(
-    //   body: _pages[_selectedIndex],
-    //   bottomNavigationBar: CurvedNavigationBar(
-    //     items: const <Widget>[
-    //       Icon(Icons.home),
-    //       Icon(Icons.food_bank),
-    //       Icon(Icons.group_add_sharp),
-    //       Icon(Icons.person)
-    //     ],
-    //     onTap: _onItemTapped,
-    //     backgroundColor: Colors.grey,
-    //   ),
-    // );
-
-    // return Scaffold(
-    //   body: _pages[_selectedIndex],
-    //   bottomNavigationBar: BottomNavigationBar(
-    //     items: const <BottomNavigationBarItem>[
-    //       BottomNavigationBarItem(
-    //         icon: Icon(Icons.home),
-    //         label: 'Home',
-    //       ),
-    //       BottomNavigationBarItem(
-    //         icon: Icon(Icons.food_bank),
-    //         label: 'Food',
-    //       ),
-    //       BottomNavigationBarItem(
-    //         icon: Icon(Icons.group_add_sharp),
-    //         label: 'Stress',
-    //       ),
-    //       BottomNavigationBarItem(
-    //         icon: Icon(Icons.person),
-    //         label: 'Profile',
-    //       ),
-    //     ],
-    //     currentIndex: _selectedIndex,
-    //     unselectedItemColor: Colors.grey,
-    //     selectedItemColor: Colors.blue,
-    //     onTap: _onItemTapped,
-    //   ),
-    // );
   }
 }

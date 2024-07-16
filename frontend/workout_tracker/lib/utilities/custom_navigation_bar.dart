@@ -3,12 +3,13 @@ import 'package:flutter/material.dart';
 class CustomNavigationBar extends StatefulWidget {
   final int selectedIndex;
   final ValueChanged<int> onTap;
-  final List<Widget> items;
+  final List<String> items;
   final Color backgroundColor;
   final Color iconColor;
   final Color selectedIconColor;
 
-  CustomNavigationBar({
+  const CustomNavigationBar({
+    super.key,
     required this.selectedIndex,
     required this.onTap,
     required this.items,
@@ -71,7 +72,7 @@ class _CustomNavigationBarState extends State<CustomNavigationBar>
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: widget.items.asMap().entries.map((entry) {
           int index = entry.key;
-          Widget icon = entry.value;
+          String assetPath = entry.value;
           bool isSelected = widget.selectedIndex == index;
           return GestureDetector(
             onTap: () {
@@ -83,8 +84,8 @@ class _CustomNavigationBarState extends State<CustomNavigationBar>
               curve: Curves.easeInOut,
               padding: const EdgeInsets.all(8),
               margin: EdgeInsets.only(
-                top: isSelected ? 0 : 12,
-                bottom: isSelected ? 12 : 0,
+                top: isSelected ? 0 : 10,
+                bottom: isSelected ? 10 : 0,
               ),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
@@ -92,12 +93,11 @@ class _CustomNavigationBarState extends State<CustomNavigationBar>
                     ? widget.selectedIconColor.withOpacity(0.2)
                     : Colors.transparent,
               ),
-              child: IconTheme(
-                data: IconThemeData(
-                  color:
-                      isSelected ? widget.selectedIconColor : widget.iconColor,
-                ),
-                child: icon,
+              child: Image.asset(
+                assetPath,
+                color: isSelected ? widget.selectedIconColor : widget.iconColor,
+                height: 25, // adjust size as needed
+                width: 25, // adjust size as needed
               ),
             ),
           );
