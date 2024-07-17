@@ -39,7 +39,7 @@ class _MyHomePageState extends State<MyHomePage> {
     HomePage(),
     CalorieTracking(),
     StressTracking(),
-    ProfilePage(),
+    const ProfilePage(),
   ];
 
   void _onItemTapped(int index) {
