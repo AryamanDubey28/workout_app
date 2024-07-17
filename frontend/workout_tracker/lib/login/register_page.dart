@@ -32,9 +32,7 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   Future signUp() async {
-    // Authentication
     if (passwordConfirmed()) {
-      //create the user with entered email and password
       try {
         UserCredential userCred = await FirebaseAuth.instance
             .createUserWithEmailAndPassword(
@@ -79,9 +77,10 @@ class _RegisterPageState extends State<RegisterPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const CircleAvatar(
-                  backgroundImage: AssetImage(''),
-                  radius: 85.0,
+                Image.asset(
+                  'assets/images/meditation.png',
+                  height: 150.0,
+                  width: 150.0,
                 ),
                 const SizedBox(
                   height: 30.0,
@@ -89,7 +88,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 const Padding(
                   padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
                   child: Text(
-                    "Nice To Meet You",
+                    "Sign Up Now",
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 44),
                   ),
                 ),
@@ -258,7 +257,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     child: Container(
                       padding: const EdgeInsets.all(20.0),
                       decoration: BoxDecoration(
-                        color: Colors.blue[900],
+                        color: Colors.black,
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: const Center(
@@ -287,7 +286,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       onTap: widget.showLoginPage,
                       child: Text("Login Now",
                           style: TextStyle(
-                            color: Colors.blue[900],
+                            color: Colors.grey[700],
                             fontWeight: FontWeight.bold,
                           )),
                     ),

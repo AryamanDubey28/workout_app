@@ -69,9 +69,10 @@ class _LoginPageState extends State<LoginPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const CircleAvatar(
-                  backgroundImage: AssetImage('assets/images/dumbbell.png'),
-                  radius: 85.0,
+                Image.asset(
+                  'assets/images/dumbbell.png',
+                  height: 170.0,
+                  width: 170.0,
                 ),
                 const SizedBox(
                   height: 30.0,
@@ -150,7 +151,7 @@ class _LoginPageState extends State<LoginPage> {
                   child: Text(
                     "Forgot Password?",
                     style: TextStyle(
-                      color: Colors.blue[900],
+                      color: Colors.grey[700],
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -160,30 +161,14 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                  child: TextButton(
-                    style: ButtonStyle(
-                      foregroundColor:
-                          MaterialStateProperty.all<Color>(Colors.blue),
-                      overlayColor: MaterialStateProperty.resolveWith<Color?>(
-                        (Set<MaterialState> states) {
-                          if (states.contains(MaterialState.hovered)) {
-                            return Colors.blue.withOpacity(0.04);
-                          }
-                          if (states.contains(MaterialState.focused) ||
-                              states.contains(MaterialState.pressed)) {
-                            return Colors.blue.withOpacity(0.12);
-                          }
-                          return null; // Defer to the widget's default.
-                        },
-                      ),
-                    ),
-                    onPressed: () {
+                  child: GestureDetector(
+                    onTap: () {
                       signIn();
                     },
                     child: Container(
                       padding: const EdgeInsets.all(20.0),
                       decoration: BoxDecoration(
-                        color: Colors.blue[900],
+                        color: Colors.black,
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: const Center(
@@ -204,7 +189,7 @@ class _LoginPageState extends State<LoginPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text("Not a member?"),
+                    const Text("Not a member yet?"),
                     const SizedBox(
                       width: 5.0,
                     ),
@@ -212,7 +197,7 @@ class _LoginPageState extends State<LoginPage> {
                       onTap: widget.showRegisterPage,
                       child: Text("Register Now",
                           style: TextStyle(
-                            color: Colors.blue[900],
+                            color: Colors.grey[700],
                             fontWeight: FontWeight.bold,
                           )),
                     ),

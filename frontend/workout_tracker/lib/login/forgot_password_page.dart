@@ -48,76 +48,86 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          "Password Reset Page",
-          style: TextStyle(
-            fontSize: 24.0,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        elevation: 0,
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            const SizedBox(
-              height: 30.0,
-            ),
-            const Center(
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 12.0),
-                child: Text(
-                  "Enter the email you would like the password reset link to be sent to",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
+      appBar: AppBar(),
+      body: SafeArea(
+        child: Center(
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  'assets/images/lock.png',
+                  height: 170.0,
+                  width: 170.0,
                 ),
-              ),
-            ),
-            const SizedBox(
-              height: 30.0,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 25.0,
-              ),
-              child: Container(
-                decoration: BoxDecoration(
-                    color: Colors.grey[200],
-                    border: Border.all(color: Colors.white),
-                    borderRadius: BorderRadius.circular(12)),
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 20.0),
-                  child: TextField(
-                    controller: emailController,
-                    decoration: const InputDecoration(
-                      border: InputBorder.none,
-                      hintText: 'Email address',
+                const SizedBox(
+                  height: 30.0,
+                ),
+                const Center(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 12.0),
+                    child: Text(
+                      "Enter the email you would like the password reset link to be sent to",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18.0,
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ),
-            const SizedBox(
-              height: 15.0,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                MaterialButton(
-                  onPressed: () {
-                    passwordReset();
-                  },
-                  color: Colors.blue[900],
-                  child: const Text("Reset Password",
-                      style: TextStyle(
-                        color: Colors.white,
+                const SizedBox(
+                  height: 30.0,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 25.0,
+                  ),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        border:
+                            Border.all(color: Theme.of(context).dividerColor),
+                        borderRadius: BorderRadius.circular(12)),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 20.0),
+                      child: TextField(
+                        controller: emailController,
+                        decoration: const InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'Email address',
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 20.0,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: GestureDetector(
+                    onTap: passwordReset,
+                    child: Container(
+                      padding: const EdgeInsets.all(20.0),
+                      decoration: BoxDecoration(
+                        color: Colors.black,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: const Center(
+                          child: Text(
+                        "Reset Password",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18.0,
+                          fontWeight: FontWeight.bold,
+                        ),
                       )),
+                    ),
+                  ),
                 ),
               ],
             ),
-          ],
+          ),
         ),
       ),
     );
