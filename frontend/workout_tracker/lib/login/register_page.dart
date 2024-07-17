@@ -34,6 +34,7 @@ class _RegisterPageState extends State<RegisterPage> {
   Future signUp() async {
     if (passwordConfirmed()) {
       try {
+        // ignore: unused_local_variable
         UserCredential userCred = await FirebaseAuth.instance
             .createUserWithEmailAndPassword(
                 email: emailController.text.trim(),
