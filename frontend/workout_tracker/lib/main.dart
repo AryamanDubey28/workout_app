@@ -1,4 +1,4 @@
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:workout_tracker/pages/foodpage.dart';
 import 'package:workout_tracker/pages/homepage.dart';
@@ -6,7 +6,9 @@ import 'package:workout_tracker/pages/profilepage.dart';
 import 'package:workout_tracker/pages/stresspage.dart';
 import 'package:workout_tracker/utilities/custom_navigation_bar.dart';
 
-void main() {
+Future main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
