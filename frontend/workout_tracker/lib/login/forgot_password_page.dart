@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:adaptive_dialog/adaptive_dialog.dart';
 
 class ForgotPasswordPage extends StatefulWidget {
   const ForgotPasswordPage({Key? key}) : super(key: key);
@@ -17,15 +18,12 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     super.dispose();
   }
 
-  void showPasswordResetDialog() {
-    showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            content:
-                Text("Password reset link sent to ${emailController.text}"),
-          );
-        });
+  Future<void> showPasswordResetDialog() async {
+    await showOkAlertDialog(
+      context: context,
+      title: 'Password Reset',
+      message: 'Password reset link sent to ${emailController.text}',
+    );
   }
 
   Future passwordReset() async {
@@ -35,13 +33,11 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
       showPasswordResetDialog();
     } on FirebaseAuthException catch (e) {
       String outputString = e.toString().replaceAll(RegExp(r'\[.*?\]\s*'), '');
-      showDialog(
-          context: context,
-          builder: (context) {
-            return AlertDialog(
-              content: Text(outputString),
-            );
-          });
+      await showOkAlertDialog(
+        context: context,
+        title: 'Error',
+        message: outputString,
+      );
     }
   }
 

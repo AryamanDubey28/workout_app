@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:adaptive_dialog/adaptive_dialog.dart';
 
 import 'forgot_password_page.dart';
 
@@ -24,31 +25,25 @@ class _LoginPageState extends State<LoginPage> {
           password: passwordController.text.trim());
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        showDialog(
-            context: context,
-            builder: (context) {
-              return const AlertDialog(
-                content: Text("No user found for that email."),
-              );
-            });
+        await showOkAlertDialog(
+          context: context,
+          title: 'Error',
+          message: 'No user found for that email.',
+        );
       } else if (e.code == 'wrong-password') {
-        showDialog(
-            context: context,
-            builder: (context) {
-              return const AlertDialog(
-                content: Text("Incorrect Password provided"),
-              );
-            });
+        await showOkAlertDialog(
+          context: context,
+          title: 'Error',
+          message: 'Incorrect Password provided',
+        );
       } else {
-        showDialog(
-            context: context,
-            builder: (context) {
-              String outputString =
-                  e.toString().replaceAll(RegExp(r'\[.*?\]\s*'), '');
-              return AlertDialog(
-                content: Text(outputString),
-              );
-            });
+        String outputString =
+            e.toString().replaceAll(RegExp(r'\[.*?\]\s*'), '');
+        await showOkAlertDialog(
+          context: context,
+          title: 'Error',
+          message: outputString,
+        );
       }
     }
   }

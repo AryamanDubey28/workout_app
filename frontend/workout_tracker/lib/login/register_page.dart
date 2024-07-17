@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:adaptive_dialog/adaptive_dialog.dart';
 
 class RegisterPage extends StatefulWidget {
   final VoidCallback showLoginPage;
@@ -42,13 +43,11 @@ class _RegisterPageState extends State<RegisterPage> {
       } catch (e) {
         String outputString =
             e.toString().replaceAll(RegExp(r'\[.*?\]\s*'), '');
-        showDialog(
-            context: context,
-            builder: (context) {
-              return AlertDialog(
-                content: Text(outputString),
-              );
-            });
+        await showOkAlertDialog(
+          context: context,
+          title: 'Error',
+          message: outputString,
+        );
       }
     }
   }
@@ -58,13 +57,11 @@ class _RegisterPageState extends State<RegisterPage> {
         confirmPasswordController.text.trim()) {
       return true;
     } else {
-      showDialog(
-          context: context,
-          builder: (context) {
-            return const AlertDialog(
-              content: Text("The passwords do not match"),
-            );
-          });
+      showOkAlertDialog(
+        context: context,
+        title: 'Error',
+        message: 'The passwords do not match',
+      );
       return false;
     }
   }
@@ -79,9 +76,9 @@ class _RegisterPageState extends State<RegisterPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Image.asset(
-                  'assets/images/meditation.png',
-                  height: 150.0,
-                  width: 150.0,
+                  'assets/images/dumbbell.png',
+                  height: 170.0,
+                  width: 170.0,
                 ),
                 const SizedBox(
                   height: 30.0,
@@ -89,8 +86,8 @@ class _RegisterPageState extends State<RegisterPage> {
                 const Padding(
                   padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
                   child: Text(
-                    "Sign Up Now",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 44),
+                    "Nice To Meet You",
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 42),
                   ),
                 ),
                 const SizedBox(
