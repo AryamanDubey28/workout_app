@@ -1,5 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:workout_tracker/login/main_page.dart';
 import 'package:workout_tracker/pages/foodpage.dart';
 import 'package:workout_tracker/pages/homepage.dart';
 import 'package:workout_tracker/pages/profilepage.dart';
@@ -15,13 +17,14 @@ Future main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       title: 'Flutter Bottom Navbar',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(),
+      // home: MyHomePage(),
+      home: const MainPage(),
     );
   }
 }
