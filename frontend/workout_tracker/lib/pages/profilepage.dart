@@ -17,8 +17,6 @@ class ProfilePage extends StatelessWidget {
 
     if (result == OkCancelResult.ok) {
       await FirebaseAuth.instance.signOut();
-      // You can also navigate the user back to the login page if needed
-      // Navigator.of(context).pushReplacementNamed('/login');
     }
   }
 
