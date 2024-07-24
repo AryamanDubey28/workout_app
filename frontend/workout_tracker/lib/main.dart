@@ -59,9 +59,9 @@ class _MyHomePageState extends State<MyHomePage> {
       bottomNavigationBar: CustomNavigationBar(
         selectedIndex: _selectedIndex,
         items: const <String>[
-          'assets/images/home.png',
+          'assets/images/gym.png',
           'assets/images/food.png',
-          'assets/images/stress.png',
+          'assets/images/lotus.png',
           'assets/images/profile.png',
         ],
         onTap: _onItemTapped,
