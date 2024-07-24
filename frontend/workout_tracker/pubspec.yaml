@@ -42,6 +42,8 @@ dependencies:
   get: ^4.6.6
   adaptive_dialog: ^2.1.0
   percent_indicator: ^4.2.3
+  syncfusion_flutter_charts: ^26.2.4
+  community_charts_flutter: ^1.0.4
 
 dev_dependencies:
   flutter_test:
