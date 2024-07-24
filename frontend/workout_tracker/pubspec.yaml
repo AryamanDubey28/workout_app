@@ -41,6 +41,7 @@ dependencies:
   firebase_auth: ^5.1.2
   get: ^4.6.6
   adaptive_dialog: ^2.1.0
+  percent_indicator: ^4.2.3
 
 dev_dependencies:
   flutter_test:
