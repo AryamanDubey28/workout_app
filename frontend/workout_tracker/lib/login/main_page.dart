@@ -15,7 +15,7 @@ class MainPage extends StatelessWidget {
           if (snapshot.hasData) {
             //if logged in, return home page else return login page
 
-            return MyHomePage();
+            return const MyHomePage();
           } else {
             return const AuthPage();
           }
