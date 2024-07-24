@@ -158,8 +158,8 @@ class _FoodEntrySectionState extends State<FoodEntrySection> {
       message: 'Enter the food item below:',
       textFields: const [DialogTextField()],
     );
-
-    if (result != null && result.isNotEmpty) {
+    // ignore: prefer_is_empty
+    if (result != null && result.first.trim().length > 0) {
       setState(() {
         _foodItems.add(result.first);
       });

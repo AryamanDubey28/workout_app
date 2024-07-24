@@ -207,11 +207,11 @@ class JournalCard extends StatelessWidget {
             const Text(
               'Journal',
               style: TextStyle(
-                fontSize: 16,
+                fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 2),
             const Text(
               'Record your thoughts and feelings in your journal.',
             ),
@@ -251,7 +251,6 @@ class JournalCard extends StatelessWidget {
                 },
               ),
             ),
-            const SizedBox(height: 10),
             Align(
               alignment: Alignment.centerRight,
               child: TextButton(
