@@ -17,7 +17,7 @@ class StressTracking extends StatelessWidget {
               children: [
                 StressGraph(),
                 const SizedBox(height: 20),
-                const MeditationCard(),
+                MeditationCard(),
                 const SizedBox(height: 20),
                 const JournalCard(),
               ],
@@ -135,33 +135,55 @@ class StressData {
 }
 
 class MeditationCard extends StatelessWidget {
-  const MeditationCard({super.key});
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const MeditationPage()),
+        );
+      },
+      child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
+        elevation: 2,
+        child: const Padding(
+          padding: EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Meditation and Breathing Exercises',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 10),
+              Text(
+                'Find time to relax and unwind with these guided meditations and breathing exercises.',
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class MeditationPage extends StatelessWidget {
+  const MeditationPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Meditation and Breathing Exercises'),
       ),
-      elevation: 2,
-      child: const Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Meditation and Breathing Exercises',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(height: 10),
-            Text(
-              'Find time to relax and unwind with these guided meditations and breathing exercises.',
-            ),
-          ],
-        ),
+      body: const Center(
+        child: Text('Dummy Text'),
       ),
     );
   }
@@ -177,74 +199,74 @@ class JournalCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
       ),
       elevation: 2,
-      child: InkWell(
-        onTap: () {
-          showModalBottomSheet(
-            context: context,
-            isScrollControlled: true,
-            backgroundColor: Colors.transparent,
-            builder: (BuildContext context) {
-              return Container(
-                height: MediaQuery.of(context).size.height * 0.95,
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(16),
-                    topRight: Radius.circular(16),
-                  ),
-                ),
-                child: const AddJournalEntryPage(),
-              );
-            },
-          );
-        },
-        child: Padding(
-          padding: const EdgeInsets.all(24.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const Text(
-                'Journal',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
+      child: Padding(
+        padding: const EdgeInsets.all(24.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const Text(
+              'Journal',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
               ),
-              const SizedBox(height: 10),
-              Container(
-                width: 60,
-                height: 60,
-                decoration: const BoxDecoration(
-                  color: Colors.indigo,
-                  shape: BoxShape.circle,
-                ),
-                child: const Icon(
+            ),
+            const SizedBox(height: 10),
+            const Text(
+              'Record your thoughts and feelings in your journal.',
+            ),
+            const SizedBox(height: 10),
+            Container(
+              width: 60,
+              height: 60,
+              decoration: const BoxDecoration(
+                color: Colors.indigo,
+                shape: BoxShape.circle,
+              ),
+              child: IconButton(
+                icon: const Icon(
                   Icons.add,
                   color: Colors.white,
                   size: 35,
                 ),
+                onPressed: () {
+                  showModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true,
+                    backgroundColor: Colors.transparent,
+                    builder: (BuildContext context) {
+                      return Container(
+                        height: MediaQuery.of(context).size.height * 0.95,
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(16),
+                            topRight: Radius.circular(16),
+                          ),
+                        ),
+                        child: const AddJournalEntryPage(),
+                      );
+                    },
+                  );
+                },
               ),
-              const SizedBox(height: 10),
-              const Text(
-                'Record your thoughts and feelings in your journal.',
+            ),
+            const SizedBox(height: 10),
+            Align(
+              alignment: Alignment.centerRight,
+              child: TextButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            const ViewAllJournalEntriesPage()),
+                  );
+                },
+                child: const Text('See All'),
               ),
-              const SizedBox(height: 10),
-              Align(
-                alignment: Alignment.centerRight,
-                child: TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              const ViewAllJournalEntriesPage()),
-                    );
-                  },
-                  child: const Text('See All'),
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
@@ -306,6 +328,9 @@ class ViewAllJournalEntriesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('All Journal Entries'),
+      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16.0),

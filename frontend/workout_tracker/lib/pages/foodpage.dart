@@ -16,7 +16,12 @@ class CalorieTracking extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 NutritionalSummary(),
-                SizedBox(height: 10),
+                Divider(
+                  color: Colors.grey,
+                  thickness: 1,
+                  indent: 10,
+                  endIndent: 10,
+                ),
                 FoodEntrySection(
                   title: 'Breakfast',
                   calories: '272 kcal',
@@ -32,7 +37,7 @@ class CalorieTracking extends StatelessWidget {
                   calories: '650 kcal',
                   imagePath: 'assets/images/dinner.png',
                 ),
-                SizedBox(height: 10),
+                SizedBox(height: 2),
                 WaterTrackingSection(),
               ],
             ),
@@ -268,14 +273,21 @@ class _WaterTrackingSectionState extends State<WaterTrackingSection> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Center(
-              child: Text(
-                'Water Tracking',
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  'Water Tracking',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
+                IconButton(
+                  icon: const Icon(Icons.add),
+                  onPressed: _incrementGlasses,
+                ),
+              ],
             ),
             const SizedBox(height: 10),
             GridView.builder(
@@ -301,32 +313,26 @@ class _WaterTrackingSectionState extends State<WaterTrackingSection> {
               },
             ),
             const SizedBox(height: 10),
+            const Divider(
+              color: Colors.grey,
+              thickness: 0.7,
+            ),
+            const SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Row(
                   children: [
-                    IconButton(
-                      icon: const Icon(Icons.add),
-                      onPressed: _incrementGlasses,
+                    Image.asset(
+                      'assets/images/water-bottle-blue.png',
+                      width: 40,
+                      height: 40,
+                      fit: BoxFit.cover,
                     ),
-                    const SizedBox(
-                      width: 50,
-                    ),
-                    Row(
-                      children: [
-                        Image.asset(
-                          'assets/images/water-bottle-blue.png',
-                          width: 40,
-                          height: 40,
-                          fit: BoxFit.cover,
-                        ),
-                        const SizedBox(width: 1),
-                        const Text(
-                          '= 250ml',
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                      ],
+                    const SizedBox(width: 5),
+                    const Text(
+                      '= 250ml',
+                      style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),
