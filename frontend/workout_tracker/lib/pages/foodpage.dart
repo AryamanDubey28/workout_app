@@ -21,9 +21,21 @@ class CalorieTracking extends StatelessWidget {
             children: [
               NutritionalSummary(),
               SizedBox(height: 20),
-              FoodEntrySection(title: 'Breakfast', calories: '272 kcal'),
-              FoodEntrySection(title: 'Lunch', calories: '477 kcal'),
-              FoodEntrySection(title: 'Dinner', calories: '650 kcal'),
+              FoodEntrySection(
+                title: 'Breakfast',
+                calories: '272 kcal',
+                imagePath: 'assets/images/fruits.png',
+              ),
+              FoodEntrySection(
+                title: 'Lunch',
+                calories: '477 kcal',
+                imagePath: 'assets/images/lunch-bag.png',
+              ),
+              FoodEntrySection(
+                title: 'Dinner',
+                calories: '650 kcal',
+                imagePath: 'assets/images/dinner.png',
+              ),
             ],
           ),
         ),
@@ -47,7 +59,7 @@ class NutritionalSummary extends StatelessWidget {
         child: Column(
           children: [
             const Text(
-              '1200 kcal left',
+              '1139 kcal left',
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
@@ -77,7 +89,7 @@ class NutritionalSummary extends StatelessWidget {
                   ],
                 ),
                 backgroundColor: Colors.grey[300]!,
-                progressColor: const Color.fromARGB(255, 21, 125, 199),
+                progressColor: Colors.blue,
               ),
             ),
           ],
@@ -118,9 +130,14 @@ class NutritionalInfo extends StatelessWidget {
 class FoodEntrySection extends StatefulWidget {
   final String title;
   final String calories;
+  final String imagePath;
 
-  const FoodEntrySection(
-      {super.key, required this.title, required this.calories});
+  const FoodEntrySection({
+    super.key,
+    required this.title,
+    required this.calories,
+    required this.imagePath,
+  });
 
   @override
   _FoodEntrySectionState createState() => _FoodEntrySectionState();
@@ -157,7 +174,8 @@ class _FoodEntrySectionState extends State<FoodEntrySection> {
       child: Column(
         children: [
           ListTile(
-            leading: const Icon(Icons.fastfood),
+            leading: Image.asset(widget.imagePath,
+                width: 40, height: 40, fit: BoxFit.cover),
             title: Text(
               widget.title,
               style: const TextStyle(
