@@ -7,36 +7,38 @@ class CalorieTracking extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Food Tracker'),
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-      ),
-      body: const Padding(
-        padding: EdgeInsets.all(16.0),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              NutritionalSummary(),
-              SizedBox(height: 20),
-              FoodEntrySection(
-                title: 'Breakfast',
-                calories: '272 kcal',
-                imagePath: 'assets/images/fruits.png',
-              ),
-              FoodEntrySection(
-                title: 'Lunch',
-                calories: '477 kcal',
-                imagePath: 'assets/images/lunch-bag.png',
-              ),
-              FoodEntrySection(
-                title: 'Dinner',
-                calories: '650 kcal',
-                imagePath: 'assets/images/dinner.png',
-              ),
-            ],
+    return const Scaffold(
+      // appBar: AppBar(
+      //   title: const Text('Food Tracker'),
+      //   backgroundColor: Colors.transparent,
+      //   elevation: 0,
+      // ),
+      body: SafeArea(
+        child: Padding(
+          padding: EdgeInsets.all(16.0),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                NutritionalSummary(),
+                SizedBox(height: 20),
+                FoodEntrySection(
+                  title: 'Breakfast',
+                  calories: '272 kcal',
+                  imagePath: 'assets/images/fruits.png',
+                ),
+                FoodEntrySection(
+                  title: 'Lunch',
+                  calories: '477 kcal',
+                  imagePath: 'assets/images/lunch-bag.png',
+                ),
+                FoodEntrySection(
+                  title: 'Dinner',
+                  calories: '650 kcal',
+                  imagePath: 'assets/images/dinner.png',
+                ),
+              ],
+            ),
           ),
         ),
       ),

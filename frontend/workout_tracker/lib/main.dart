@@ -41,7 +41,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   final List<Widget> _pages = [
     const HomePage(),
-    CalorieTracking(),
+    const CalorieTracking(),
     StressTracking(),
     const ProfilePage(),
   ];
@@ -59,9 +59,9 @@ class _MyHomePageState extends State<MyHomePage> {
       bottomNavigationBar: CustomNavigationBar(
         selectedIndex: _selectedIndex,
         items: const <String>[
-          'assets/images/gym.png',
-          'assets/images/food.png',
-          'assets/images/lotus.png',
+          'assets/images/gym-c.png',
+          'assets/images/food-c.png',
+          'assets/images/lotus-c.png',
           'assets/images/profile.png',
         ],
         onTap: _onItemTapped,
