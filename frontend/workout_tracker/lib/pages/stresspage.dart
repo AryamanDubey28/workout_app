@@ -87,7 +87,7 @@ class StressGraph extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text(
-              'Stress Levels Over the Week',
+              'This Week',
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
