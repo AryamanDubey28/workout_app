@@ -304,9 +304,31 @@ class _WaterTrackingSectionState extends State<WaterTrackingSection> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                IconButton(
-                  icon: const Icon(Icons.add),
-                  onPressed: _incrementGlasses,
+                Row(
+                  children: [
+                    IconButton(
+                      icon: const Icon(Icons.add),
+                      onPressed: _incrementGlasses,
+                    ),
+                    const SizedBox(
+                      width: 50,
+                    ),
+                    Row(
+                      children: [
+                        Image.asset(
+                          'assets/images/water-bottle-blue.png',
+                          width: 40,
+                          height: 40,
+                          fit: BoxFit.cover,
+                        ),
+                        const SizedBox(width: 1),
+                        const Text(
+                          '= 250ml',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
                 if (showSaveButton)
                   ElevatedButton(
