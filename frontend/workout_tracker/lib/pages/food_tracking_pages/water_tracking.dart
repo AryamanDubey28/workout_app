@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:workout_tracker/utilities/platform_specific_button.dart';
 
 class WaterTrackingSection extends StatefulWidget {
   const WaterTrackingSection({super.key});
@@ -115,7 +116,7 @@ class _WaterTrackingSectionState extends State<WaterTrackingSection> {
                   ],
                 ),
                 if (showSaveButton)
-                  ElevatedButton(
+                  PlatformSpecificButton(
                     onPressed: _saveWaterIntake,
                     child: const Text('Save'),
                   ),

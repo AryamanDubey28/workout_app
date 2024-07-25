@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:workout_tracker/utilities/platform_specific_button.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -142,7 +143,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       style: const TextStyle(fontSize: 16),
                     ),
                     const SizedBox(height: 16),
-                    ElevatedButton(
+                    PlatformSpecificButton(
                       onPressed: () {
                         _showEditProfileDialog(context);
                       },
@@ -157,31 +158,21 @@ class _ProfilePageState extends State<ProfilePage> {
 
   void _showEditProfileDialog(BuildContext context) {
     final _nameController = TextEditingController(text: _user.displayName);
-
-    showDialog(
+    showTextInputDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Edit Profile'),
-        content: TextField(
-          controller: _nameController,
-          decoration: const InputDecoration(labelText: 'Name'),
+      title: 'Edit Profile',
+      textFields: [
+        DialogTextField(
+          initialText: _nameController.text,
+          hintText: 'Name',
         ),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            child: const Text('Cancel'),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              _updateProfile(_nameController.text);
-              Navigator.of(context).pop();
-            },
-            child: const Text('Save'),
-          ),
-        ],
-      ),
-    );
+      ],
+      okLabel: 'Save',
+      cancelLabel: 'Cancel',
+    ).then((result) {
+      if (result != null) {
+        _updateProfile(result[0]);
+      }
+    });
   }
 }

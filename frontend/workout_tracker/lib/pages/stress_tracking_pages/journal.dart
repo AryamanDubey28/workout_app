@@ -94,15 +94,11 @@ class AddJournalEntryPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            ElevatedButton(
+            TextButton(
               onPressed: () {
                 // Add save logic here
                 Navigator.pop(context);
               },
-              style: ElevatedButton.styleFrom(
-                foregroundColor: Colors.white,
-                backgroundColor: Colors.indigo,
-              ),
               child: const Text('Done'),
             ),
             const SizedBox(height: 20),
