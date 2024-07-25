@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class MeditationCard extends StatelessWidget {
+  const MeditationCard({super.key});
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

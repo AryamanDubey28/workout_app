@@ -5,9 +5,9 @@ import 'package:adaptive_dialog/adaptive_dialog.dart';
 class RegisterPage extends StatefulWidget {
   final VoidCallback showLoginPage;
   const RegisterPage({
-    Key? key,
+    super.key,
     required this.showLoginPage,
-  }) : super(key: key);
+  });
 
   @override
   State<RegisterPage> createState() => _RegisterPageState();

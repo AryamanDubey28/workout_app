@@ -18,7 +18,7 @@ class StressTracking extends StatelessWidget {
               children: [
                 StressGraph(),
                 const SizedBox(height: 20),
-                MeditationCard(),
+                const MeditationCard(),
                 const SizedBox(height: 20),
                 const JournalCard(),
               ],

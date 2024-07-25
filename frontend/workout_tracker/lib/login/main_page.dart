@@ -4,7 +4,7 @@ import 'package:workout_tracker/main.dart';
 import 'auth_page.dart';
 
 class MainPage extends StatelessWidget {
-  const MainPage({Key? key}) : super(key: key);
+  const MainPage({super.key});
 
   @override
   Widget build(BuildContext context) {
