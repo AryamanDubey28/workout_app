@@ -2,10 +2,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:workout_tracker/login/main_page.dart';
-import 'package:workout_tracker/pages/foodpage.dart';
-import 'package:workout_tracker/pages/homepage.dart';
-import 'package:workout_tracker/pages/profilepage.dart';
-import 'package:workout_tracker/pages/stresspage.dart';
+import 'package:workout_tracker/pages/food_tracking_pages/foodpage.dart';
+import 'package:workout_tracker/pages/homepage_pages/homepage.dart';
+import 'package:workout_tracker/pages/profile_pages/profilepage.dart';
+import 'package:workout_tracker/pages/stress_tracking_pages/stresspage.dart';
 import 'package:workout_tracker/utilities/custom_navigation_bar.dart';
 
 Future main() async {
