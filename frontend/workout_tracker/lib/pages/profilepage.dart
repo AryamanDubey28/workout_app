@@ -26,8 +26,15 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   void initState() {
     super.initState();
+    _loadUserProfile();
+  }
+
+  Future<void> _loadUserProfile() async {
     _user = _auth.currentUser!;
-    _profileImageUrl = _user.photoURL ?? _getRandomDefaultImage();
+    await _user.reload();
+    setState(() {
+      _profileImageUrl = _user.photoURL ?? _getRandomDefaultImage();
+    });
   }
 
   String _getRandomDefaultImage() {
@@ -51,17 +58,20 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Future<void> _pickImage() async {
-    final picker = ImagePicker();
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    try {
+      final picker = ImagePicker();
+      final pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
-    if (pickedFile != null) {
-      // Here you should upload the image to your backend and get the URL
-      // For example, you can use Firebase Storage
-      // After uploading, set the _profileImageUrl to the URL of the uploaded image
-      setState(() {
-        _profileImageUrl =
-            pickedFile.path; // Temporary, replace with uploaded image URL
-      });
+      if (pickedFile != null) {
+        setState(() {
+          _profileImageUrl =
+              pickedFile.path; // Temporary, replace with uploaded image URL
+        });
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to pick image: $e')),
+      );
     }
   }
 
@@ -99,41 +109,47 @@ class _ProfilePageState extends State<ProfilePage> {
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              CircleAvatar(
-                radius: 50,
-                backgroundImage: _profileImageUrl!.startsWith('assets/')
-                    ? AssetImage(_profileImageUrl!) as ImageProvider
-                    : FileImage(File(_profileImageUrl!)),
-                child: _profileImageUrl == null
-                    ? const Icon(Icons.person, size: 50)
-                    : null,
-              ),
-              TextButton(
-                onPressed: _pickImage,
-                child: const Text('Change Profile Picture'),
-              ),
-              const SizedBox(height: 16),
-              Text(
-                _user.displayName ?? 'No name',
-                style: const TextStyle(fontSize: 24),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                _user.email ?? 'No email',
-                style: const TextStyle(fontSize: 16),
-              ),
-              const SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: () {
-                  _showEditProfileDialog(context);
-                },
-                child: const Text('Edit Profile'),
-              ),
-            ],
-          ),
+          child: _user == null
+              ? CircularProgressIndicator()
+              : Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CircleAvatar(
+                      radius: 50,
+                      backgroundImage: _profileImageUrl != null &&
+                              _profileImageUrl!.startsWith('assets/')
+                          ? AssetImage(_profileImageUrl!) as ImageProvider
+                          : _profileImageUrl != null
+                              ? FileImage(File(_profileImageUrl!))
+                              : AssetImage(_getRandomDefaultImage())
+                                  as ImageProvider,
+                      child: _profileImageUrl == null
+                          ? const Icon(Icons.person, size: 50)
+                          : null,
+                    ),
+                    TextButton(
+                      onPressed: _pickImage,
+                      child: const Text('Change Profile Picture'),
+                    ),
+                    const SizedBox(height: 16),
+                    Text(
+                      _user.displayName ?? 'No name',
+                      style: const TextStyle(fontSize: 24),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      _user.email ?? 'No email',
+                      style: const TextStyle(fontSize: 16),
+                    ),
+                    const SizedBox(height: 16),
+                    ElevatedButton(
+                      onPressed: () {
+                        _showEditProfileDialog(context);
+                      },
+                      child: const Text('Edit Profile'),
+                    ),
+                  ],
+                ),
         ),
       ),
     );

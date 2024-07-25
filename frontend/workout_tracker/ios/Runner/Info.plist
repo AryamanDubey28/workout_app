@@ -16,6 +16,12 @@
 	<string>workout_tracker</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
+
+	<key>NSPhotoLibraryUsageDescription</key>
+<string>We need access to the photo library to allow you to upload profile pictures.</string>
+<key>NSCameraUsageDescription</key>
+<string>We need access to the camera to allow you to take a picture for your profile.</string>
+
 	<key>CFBundleShortVersionString</key>
 	<string>$(FLUTTER_BUILD_NAME)</string>
 	<key>CFBundleSignature</key>
