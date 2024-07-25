@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:adaptive_dialog/adaptive_dialog.dart';
-import 'package:percent_indicator/percent_indicator.dart';
+import 'package:flutter/material.dart';
+import 'package:percent_indicator/circular_percent_indicator.dart';
 
 class CalorieTracking extends StatelessWidget {
   const CalorieTracking({super.key});
@@ -48,8 +48,36 @@ class CalorieTracking extends StatelessWidget {
   }
 }
 
-class NutritionalSummary extends StatelessWidget {
+class NutritionalSummary extends StatefulWidget {
   const NutritionalSummary({super.key});
+
+  @override
+  _NutritionalSummaryState createState() => _NutritionalSummaryState();
+}
+
+class _NutritionalSummaryState extends State<NutritionalSummary>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _animation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 800),
+    );
+    _animation = Tween<double>(begin: 0, end: 0.6).animate(
+      CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
+    );
+    _controller.forward();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,29 +99,34 @@ class NutritionalSummary extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             Center(
-              child: CircularPercentIndicator(
-                radius: MediaQuery.of(context).size.width / 2.5,
-                lineWidth: 20.0,
-                percent: 0.6,
-                center: const Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    NutritionalInfo(
-                      label: 'Carbs',
-                      value: '122 / 249 g',
+              child: AnimatedBuilder(
+                animation: _animation,
+                builder: (context, child) {
+                  return CircularPercentIndicator(
+                    radius: MediaQuery.of(context).size.width / 2.5,
+                    lineWidth: 20.0,
+                    percent: _animation.value,
+                    center: const Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        NutritionalInfo(
+                          label: 'Carbs',
+                          value: '122 / 249 g',
+                        ),
+                        NutritionalInfo(
+                          label: 'Protein',
+                          value: '38 / 69 g',
+                        ),
+                        NutritionalInfo(
+                          label: 'Fat',
+                          value: '39 / 79 g',
+                        ),
+                      ],
                     ),
-                    NutritionalInfo(
-                      label: 'Protein',
-                      value: '38 / 69 g',
-                    ),
-                    NutritionalInfo(
-                      label: 'Fat',
-                      value: '39 / 79 g',
-                    ),
-                  ],
-                ),
-                backgroundColor: Colors.grey[300]!,
-                progressColor: Colors.blue,
+                    backgroundColor: Colors.grey[300]!,
+                    progressColor: Colors.blue,
+                  );
+                },
               ),
             ),
           ],
@@ -158,8 +191,7 @@ class _FoodEntrySectionState extends State<FoodEntrySection> {
       message: 'Enter the food item below:',
       textFields: const [DialogTextField()],
     );
-    // ignore: prefer_is_empty
-    if (result != null && result.first.trim().length > 0) {
+    if (result != null && result.first.trim().isNotEmpty) {
       setState(() {
         _foodItems.add(result.first);
       });
