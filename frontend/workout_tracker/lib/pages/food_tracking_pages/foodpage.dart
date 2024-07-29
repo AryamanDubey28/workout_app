@@ -17,7 +17,9 @@ class CalorieTracking extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                DateCards(),
+                DateCards(
+                  title: "Food Tracking Insights",
+                ),
                 SizedBox(height: 20),
                 NutritionalSummary(), // Placeholder for your actual widget
                 Divider(

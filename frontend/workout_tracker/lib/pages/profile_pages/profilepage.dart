@@ -110,6 +110,7 @@ class _ProfilePageState extends State<ProfilePage> {
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
+          // ignore: unnecessary_null_comparison
           child: _user == null
               ? const CircularProgressIndicator()
               : Column(

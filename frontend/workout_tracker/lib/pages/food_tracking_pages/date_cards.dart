@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class DateCards extends StatefulWidget {
-  const DateCards({super.key});
+  final String title;
+  const DateCards({super.key, required this.title});
 
   @override
   State<DateCards> createState() => _DateCardsState();
@@ -37,8 +38,9 @@ class _DateCardsState extends State<DateCards> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Text('Weekdays',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+            Text(widget.title,
+                style:
+                    const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
             IconButton(
               icon: const Icon(Icons.calendar_today),
               onPressed: () {}, // Placeholder for calendar icon action

@@ -43,7 +43,7 @@ class _MyHomePageState extends State<MyHomePage> {
     const HomePage(),
     const CalorieTracking(),
     const StressTracking(),
-    const ProfilePage(),
+    // const ProfilePage(),
   ];
 
   void _onItemTapped(int index) {
@@ -62,7 +62,7 @@ class _MyHomePageState extends State<MyHomePage> {
           'assets/images/gym-c.png',
           'assets/images/food-c.png',
           'assets/images/lotus-c.png',
-          'assets/images/profile.png',
+          // 'assets/images/profile.png',
         ],
         onTap: _onItemTapped,
       ),
