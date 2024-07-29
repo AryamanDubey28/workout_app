@@ -118,7 +118,10 @@ class _WaterTrackingSectionState extends State<WaterTrackingSection> {
                 if (showSaveButton)
                   PlatformSpecificButton(
                     onPressed: _saveWaterIntake,
-                    child: const Text('Save'),
+                    child: const Text(
+                      'Save',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
                   ),
               ],
             ),
