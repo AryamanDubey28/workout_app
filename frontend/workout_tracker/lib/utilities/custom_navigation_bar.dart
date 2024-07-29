@@ -56,6 +56,8 @@ class _CustomNavigationBarState extends State<CustomNavigationBar>
 
   @override
   Widget build(BuildContext context) {
+    // Calculate padding and width dynamically
+
     return Container(
       decoration: BoxDecoration(
         color: widget.backgroundColor,
@@ -68,13 +70,14 @@ class _CustomNavigationBarState extends State<CustomNavigationBar>
           ),
         ],
       ),
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-      margin: const EdgeInsets.all(16),
+      padding: const EdgeInsets.symmetric(
+        vertical: 10,
+      ),
+      margin: const EdgeInsets.all(20),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: widget.items.asMap().entries.map((entry) {
-          int index = entry.key;
-          String assetPath = entry.value;
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: widget.items.map((item) {
+          int index = widget.items.indexOf(item);
           bool isSelected = widget.selectedIndex == index;
           return GestureDetector(
             onTap: () {
@@ -96,10 +99,10 @@ class _CustomNavigationBarState extends State<CustomNavigationBar>
                     : Colors.transparent,
               ),
               child: Image.asset(
-                assetPath,
+                item,
                 color: isSelected ? widget.selectedIconColor : widget.iconColor,
-                height: 25, // adjust size as needed
-                width: 25, // adjust size as needed
+                height: 25,
+                width: 25,
               ),
             ),
           );
