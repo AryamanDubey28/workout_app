@@ -88,7 +88,8 @@ class _DateCardsState extends State<DateCards> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
                           side: BorderSide(
-                              color: isToday ? Colors.blue : Colors.transparent,
+                              color:
+                                  isToday ? Colors.black : Colors.transparent,
                               width: 2),
                         ),
                         child: Padding(
@@ -100,14 +101,15 @@ class _DateCardsState extends State<DateCards> {
                               Text(
                                 numericDayFormatter.format(weekDays[index]),
                                 style: TextStyle(
-                                    color: isToday ? Colors.blue : Colors.black,
+                                    color:
+                                        isToday ? Colors.black : Colors.black,
                                     fontWeight: FontWeight.bold),
                               ),
                               Text(
                                 dayFormatter.format(weekDays[index]),
                                 style: TextStyle(
                                     color:
-                                        isToday ? Colors.blue : Colors.black),
+                                        isToday ? Colors.black : Colors.black),
                               ),
                             ],
                           ),

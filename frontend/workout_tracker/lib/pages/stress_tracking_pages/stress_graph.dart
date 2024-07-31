@@ -25,7 +25,8 @@ class StressGraph extends StatelessWidget {
     return [
       charts.Series<StressData, DateTime>(
         id: 'Stress',
-        colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
+        colorFn: (_, __) =>
+            charts.ColorUtil.fromDartColor(Colors.purple), // Change to purple
         domainFn: (StressData stress, _) => stress.date,
         measureFn: (StressData stress, _) => stress.level,
         data: data,

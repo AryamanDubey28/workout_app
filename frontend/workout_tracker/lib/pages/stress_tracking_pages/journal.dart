@@ -31,7 +31,7 @@ class JournalCard extends StatelessWidget {
               width: 60,
               height: 60,
               decoration: const BoxDecoration(
-                color: Colors.blue,
+                color: Colors.purple,
                 shape: BoxShape.circle,
               ),
               child: IconButton(
