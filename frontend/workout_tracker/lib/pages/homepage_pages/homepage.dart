@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:workout_tracker/pages/homepage_pages/workout_display.dart';
 import 'package:workout_tracker/services/workout_service.dart';
 
 class HomePage extends StatefulWidget {
@@ -21,9 +22,6 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Workout Generator'),
-      ),
       body: Center(
         child: FutureBuilder<Map<String, dynamic>>(
           future: _workout,
@@ -40,24 +38,6 @@ class _HomePageState extends State<HomePage> {
           },
         ),
       ),
-    );
-  }
-}
-
-class WorkoutDisplay extends StatelessWidget {
-  final Map<String, dynamic> workout;
-
-  const WorkoutDisplay({super.key, required this.workout});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text('Pushup: ${workout['pushup']}'),
-        Text('Pullup: ${workout['pullup']}'),
-        Text('Squat/Lunge: ${workout['squat_lunge']}'),
-      ],
     );
   }
 }

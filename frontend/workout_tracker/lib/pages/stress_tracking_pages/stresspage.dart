@@ -18,7 +18,7 @@ class StressTracking extends StatelessWidget {
             colors: [
               Color.fromARGB(255, 166, 82, 245), // Dark purple
               Color.fromARGB(255, 197, 130, 244), // Medium purple
-              Color.fromARGB(255, 217, 153, 249), // Light purple
+              Color.fromARGB(255, 219, 163, 247), // Light purple
               Color.fromARGB(255, 229, 191, 248), // Very light purple
               Colors.white,
             ],
