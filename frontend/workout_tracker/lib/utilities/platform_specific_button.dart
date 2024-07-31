@@ -4,26 +4,27 @@ import 'dart:io' show Platform;
 
 class PlatformSpecificButton extends StatelessWidget {
   final Widget child;
+  final Color color;
   final VoidCallback onPressed;
 
-  const PlatformSpecificButton({
-    super.key,
-    required this.child,
-    required this.onPressed,
-  });
+  const PlatformSpecificButton(
+      {super.key,
+      required this.child,
+      required this.onPressed,
+      this.color = Colors.blue});
 
   @override
   Widget build(BuildContext context) {
     if (Platform.isIOS) {
       return CupertinoButton(
-        color: CupertinoColors.activeBlue,
+        color: color,
         onPressed: onPressed,
         child: child,
       );
     } else {
       return ElevatedButton(
         style: ElevatedButton.styleFrom(
-          foregroundColor: Colors.blue,
+          foregroundColor: color,
           backgroundColor: Colors.white,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8),

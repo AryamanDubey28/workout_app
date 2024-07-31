@@ -40,7 +40,7 @@ class _DateCardsState extends State<DateCards> {
           children: [
             Text(widget.title,
                 style:
-                    const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                    const TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
             IconButton(
               icon: const Icon(Icons.calendar_today),
               onPressed: () {}, // Placeholder for calendar icon action

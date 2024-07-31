@@ -18,7 +18,7 @@ class _NutritionalSummaryState extends State<NutritionalSummary>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 800),
+      duration: const Duration(milliseconds: 700),
     );
     _animation = Tween<double>(begin: 0, end: 0.6).animate(
       CurvedAnimation(parent: _controller, curve: Curves.easeInOut),

@@ -1,6 +1,7 @@
 import 'package:community_charts_flutter/community_charts_flutter.dart'
     as charts;
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:workout_tracker/pages/stress_tracking_pages/stress_summary.dart';
 import 'package:workout_tracker/utilities/platform_specific_button.dart';
 
@@ -122,6 +123,7 @@ class StressGraph extends StatelessWidget {
             const SizedBox(height: 8),
             Center(
               child: PlatformSpecificButton(
+                color: CupertinoColors.systemPurple,
                 onPressed: () {
                   Navigator.push(
                     context,
