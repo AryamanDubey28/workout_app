@@ -14,14 +14,19 @@ class _CreateExerciseScreenState extends State<CreateExerciseScreen> {
   final Set<String> _selectedMuscles = {};
 
   final List<Map<String, String>> _muscleGroups = [
-    {'name': 'Chest', 'image': 'path/to/chest_image.png'},
-    {'name': 'Triceps', 'image': 'path/to/triceps_image.png'},
-    {'name': 'Biceps', 'image': 'path/to/biceps_image.png'},
-    {'name': 'Back', 'image': 'path/to/back_image.png'},
-    {'name': 'Traps', 'image': 'path/to/traps_image.png'},
-    {'name': 'Hamstrings', 'image': 'path/to/hamstrings_image.png'},
-    {'name': 'Quads', 'image': 'path/to/quads_image.png'},
-    {'name': 'Calves', 'image': 'path/to/calves_image.png'},
+    {'name': 'Chest', 'image': 'assets/images/muscle_groups/chest.png'},
+    {'name': 'Triceps', 'image': 'assets/images/muscle_groups/triceps.png'},
+    {'name': 'Shoulders', 'image': 'assets/images/muscle_groups/shoulders.png'},
+    {'name': 'Biceps', 'image': 'assets/images/muscle_groups/biceps.png'},
+    {'name': 'Back', 'image': 'assets/images/muscle_groups/back.png'},
+    {'name': 'Forearms', 'image': 'assets/images/muscle_groups/forearms.png'},
+    {'name': 'Abs', 'image': 'assets/images/muscle_groups/abs.png'},
+    {'name': 'Quads', 'image': 'assets/images/muscle_groups/quads.png'},
+    {
+      'name': 'Hamstrings',
+      'image': 'assets/images/muscle_groups/hamstrings.png'
+    },
+    {'name': 'Calves', 'image': 'assets/images/muscle_groups/calf.png'},
   ];
 
   void _toggleSelection(String muscle) {
@@ -60,7 +65,7 @@ class _CreateExerciseScreenState extends State<CreateExerciseScreen> {
             ),
             const SizedBox(height: 20),
             const Text(
-              'Muscle Groups',
+              'Muscle Groups Worked',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 10),
@@ -70,7 +75,7 @@ class _CreateExerciseScreenState extends State<CreateExerciseScreen> {
                   crossAxisCount: 2,
                   mainAxisSpacing: 10.0,
                   crossAxisSpacing: 10.0,
-                  childAspectRatio: 1.0, // More square aspect ratio
+                  childAspectRatio: 0.8, // More rectangular aspect ratio
                 ),
                 itemCount: _muscleGroups.length,
                 itemBuilder: (context, index) {
@@ -83,7 +88,7 @@ class _CreateExerciseScreenState extends State<CreateExerciseScreen> {
                         borderRadius: BorderRadius.circular(10.0),
                         side: BorderSide(
                           color: isSelected ? Colors.green : Colors.grey,
-                          width: 6.0, // Thicker border
+                          width: 4.0,
                         ),
                       ),
                       child: Padding(
@@ -91,15 +96,17 @@ class _CreateExerciseScreenState extends State<CreateExerciseScreen> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Image.asset('assets/images/gym-c.png',
-                                height: 50,
-                                width: 50), // Placeholder for images
+                            Expanded(
+                              child: Image.asset(
+                                muscle['image']!,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
                             const SizedBox(height: 10),
-                            const Divider(),
                             Text(
                               muscle['name']!,
                               textAlign: TextAlign.center,
-                              style: const TextStyle(fontSize: 14),
+                              style: const TextStyle(fontSize: 16),
                             ),
                           ],
                         ),
@@ -109,7 +116,7 @@ class _CreateExerciseScreenState extends State<CreateExerciseScreen> {
                 },
               ),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 10),
             PlatformSpecificButton(
               color: CupertinoColors.systemGreen,
               onPressed: _selectedMuscles.isNotEmpty &&
