@@ -1,5 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:workout_tracker/pages/homepage_pages/create_exercise_screen.dart';
 import 'package:workout_tracker/pages/homepage_pages/exercise_card.dart';
+import 'package:workout_tracker/utilities/platform_specific_button.dart';
 
 class WorkoutDisplay extends StatelessWidget {
   final Map<String, dynamic> workout;
@@ -60,6 +63,19 @@ class WorkoutDisplay extends StatelessWidget {
                     icon: Icons.fitness_center,
                     title: 'Squat',
                     description: workout['squat_lunge'],
+                  ),
+                  const SizedBox(height: 20),
+                  PlatformSpecificButton(
+                    color: CupertinoColors.systemGreen,
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const CreateExerciseScreen(),
+                        ),
+                      );
+                    },
+                    child: const Text('Create Exercise'),
                   ),
                 ],
               ),

@@ -5,7 +5,7 @@ import 'dart:io' show Platform;
 class PlatformSpecificButton extends StatelessWidget {
   final Widget child;
   final Color color;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
 
   const PlatformSpecificButton(
       {super.key,
