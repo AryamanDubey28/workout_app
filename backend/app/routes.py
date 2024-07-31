@@ -24,7 +24,8 @@ def get_workout():
             pushup=random_workout["pushup"],
             pullup=random_workout["pullup"],
             squat=random_workout["squat_lunge"]
-        ) # type: ignore
+        )
+        # type: ignore
         db.session.add(workout)
         db.session.commit()
         response = random_workout
