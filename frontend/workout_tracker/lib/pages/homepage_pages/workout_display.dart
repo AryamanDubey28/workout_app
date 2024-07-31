@@ -13,9 +13,15 @@ class WorkoutDisplay extends StatelessWidget {
           Container(
             width: double.infinity,
             height: 200,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               gradient: LinearGradient(
-                colors: [Colors.green[200]!, Colors.white],
+                colors: [
+                  Color.fromARGB(255, 11, 242, 19),
+                  Color.fromARGB(255, 69, 241, 75),
+                  Color.fromARGB(255, 126, 243, 130),
+                  Color.fromARGB(255, 183, 247, 185),
+                  Colors.white
+                ],
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
               ),
