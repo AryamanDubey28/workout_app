@@ -47,89 +47,76 @@ class _DateCardsState extends State<DateCards> {
             ),
           ],
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            SizedBox(
-              width: 30,
-              child: TextButton(
-                onPressed: () => _updateWeekDates(-5),
-                child: const Text('<',
-                    style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black)),
-              ),
-            ),
-            Expanded(
-              child: GestureDetector(
-                onHorizontalDragUpdate: (details) {
-                  if (details.primaryDelta != null &&
-                      details.primaryDelta! > 0) {
-                    _updateWeekDates(-5);
-                  } else if (details.primaryDelta != null &&
-                      details.primaryDelta! < 0) {
-                    _updateWeekDates(5);
-                  }
-                },
-                child: SizedBox(
-                  height: 70,
-                  child: ListView.separated(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: weekDays.length,
-                    separatorBuilder: (context, index) =>
-                        const SizedBox(width: 8),
-                    itemBuilder: (context, index) {
-                      bool isToday = weekDays[index].day == today.day &&
-                          weekDays[index].month == today.month &&
-                          weekDays[index].year == today.year;
-                      return Card(
-                        elevation: 2,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                          side: BorderSide(
-                              color:
-                                  isToday ? Colors.black : Colors.transparent,
-                              width: 2),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 16, vertical: 8),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                numericDayFormatter.format(weekDays[index]),
-                                style: TextStyle(
-                                    color:
-                                        isToday ? Colors.black : Colors.black,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              Text(
-                                dayFormatter.format(weekDays[index]),
-                                style: TextStyle(
-                                    color:
-                                        isToday ? Colors.black : Colors.black),
-                              ),
-                            ],
-                          ),
-                        ),
-                      );
-                    },
+        SizedBox(
+          height: 70,
+          child: GestureDetector(
+            onHorizontalDragUpdate: (details) {
+              if (details.primaryDelta != null && details.primaryDelta! > 0) {
+                _updateWeekDates(-5);
+              } else if (details.primaryDelta != null &&
+                  details.primaryDelta! < 0) {
+                _updateWeekDates(5);
+              }
+            },
+            child: ListView.separated(
+              scrollDirection: Axis.horizontal,
+              itemCount: weekDays.length,
+              separatorBuilder: (context, index) => const SizedBox(width: 8),
+              itemBuilder: (context, index) {
+                bool isToday = weekDays[index].day == today.day &&
+                    weekDays[index].month == today.month &&
+                    weekDays[index].year == today.year;
+                return Card(
+                  elevation: 2,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    side: BorderSide(
+                        color: isToday ? Colors.black : Colors.transparent,
+                        width: 2),
                   ),
-                ),
-              ),
+                  child: Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          numericDayFormatter.format(weekDays[index]),
+                          style: TextStyle(
+                              color: isToday ? Colors.black : Colors.black,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          dayFormatter.format(weekDays[index]),
+                          style: TextStyle(
+                              color: isToday ? Colors.black : Colors.black),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
             ),
-            SizedBox(
-              width: 30,
-              child: TextButton(
-                onPressed: () => _updateWeekDates(5),
-                child: const Text('>',
-                    style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black)),
-              ),
+          ),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            TextButton(
+              onPressed: () => _updateWeekDates(-5),
+              child: const Text('<',
+                  style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black)),
+            ),
+            TextButton(
+              onPressed: () => _updateWeekDates(5),
+              child: const Text('>',
+                  style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black)),
             ),
           ],
         ),

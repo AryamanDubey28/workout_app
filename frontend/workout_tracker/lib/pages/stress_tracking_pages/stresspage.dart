@@ -14,7 +14,8 @@ class StressTracking extends StatelessWidget {
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
-            end: Alignment.center,
+            // end: Alignment.center,
+            end: Alignment.bottomCenter,
             colors: [
               Color.fromARGB(255, 166, 82, 245), // Dark purple
               Color.fromARGB(255, 197, 130, 244), // Medium purple
@@ -35,7 +36,7 @@ class StressTracking extends StatelessWidget {
                     title: "Stress Tracking Insights",
                   ),
                   const SizedBox(
-                    height: 10,
+                    height: 5,
                   ),
                   StressGraph(),
                   const SizedBox(height: 20),

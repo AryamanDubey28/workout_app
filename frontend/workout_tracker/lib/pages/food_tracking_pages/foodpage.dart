@@ -14,8 +14,8 @@ class CalorieTracking extends StatelessWidget {
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
-            end: Alignment.center,
-            // end: Alignment.bottomCenter,
+            // end: Alignment.center,
+            end: Alignment.bottomCenter,
             colors: [
               Colors.blue,
               Color.fromARGB(255, 86, 194, 244),
@@ -36,7 +36,7 @@ class CalorieTracking extends StatelessWidget {
                   DateCards(
                     title: "Food Tracking Insights",
                   ),
-                  SizedBox(height: 20),
+                  SizedBox(height: 5),
                   NutritionalSummary(), // Placeholder for your actual widget
                   Divider(
                     color: Colors.grey,
