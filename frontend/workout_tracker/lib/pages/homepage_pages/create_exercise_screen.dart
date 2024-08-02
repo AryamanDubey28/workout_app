@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:workout_tracker/services/workout_service.dart';
 import 'package:workout_tracker/utilities/platform_specific_button.dart';
 
 class CreateExerciseScreen extends StatefulWidget {
@@ -39,10 +40,21 @@ class _CreateExerciseScreenState extends State<CreateExerciseScreen> {
     });
   }
 
-  void _saveExercise() {
+  void _saveExercise() async {
     if (_selectedMuscles.isNotEmpty &&
         _exerciseNameController.text.isNotEmpty) {
-      Navigator.pop(context, 'Exercise Saved');
+      try {
+        ApiService apiService = ApiService();
+        await apiService.addExercise(
+          _exerciseNameController.text,
+          _selectedMuscles.toList(),
+        );
+        Navigator.pop(context, 'Exercise Saved');
+      } catch (error) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Failed to save exercise')),
+        );
+      }
     }
   }
 

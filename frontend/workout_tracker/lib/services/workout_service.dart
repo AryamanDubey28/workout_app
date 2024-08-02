@@ -13,4 +13,23 @@ class ApiService {
       throw Exception('Failed to load workout');
     }
   }
+
+  Future<void> addExercise(String name, List<String> musclesWorked,
+      {double? weight}) async {
+    final response = await http.post(
+      Uri.parse('$baseUrl/add_exercise'),
+      headers: {'Content-Type': 'application/json'},
+      body: json.encode({
+        'name': name,
+        'musclesWorked': musclesWorked,
+        'weight': weight,
+      }),
+    );
+
+    if (response.statusCode == 201) {
+      print("Sent exercise from Flutter");
+    } else {
+      throw Exception('Failed to add exercise');
+    }
+  }
 }

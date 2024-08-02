@@ -1,5 +1,5 @@
 from . import db
-from sqlalchemy import String, Integer, Date
+from sqlalchemy import String, Integer, Date,Float
 from sqlalchemy.orm import mapped_column
 
 class Workout(db.Model):
@@ -12,3 +12,14 @@ class Workout(db.Model):
 
     def __repr__(self):
         return f"<Workout(id={self.id}, date={self.date}, pushup={self.pushup}, pullup={self.pullup}, squat={self.squat})>"
+
+
+class Exercise(db.Model):
+    __tablename__ = "exercises"
+    id = mapped_column(Integer, primary_key=True)
+    name = mapped_column(String(80), nullable=False)
+    muscles_worked = mapped_column(String(255), nullable=False)  # store as comma-separated string
+    weight = mapped_column(Float, nullable=True)
+
+    def __repr__(self):
+        return f"<Exercise(id={self.id}, name={self.name}, muscles_worked={self.muscles_worked}, weight={self.weight})>"

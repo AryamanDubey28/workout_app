@@ -1,6 +1,6 @@
-from flask import current_app as app, jsonify
-from .models import Workout
-from .services import generate_random_workout
+from flask import current_app as app, jsonify,request
+from .models import Workout, Exercise as ExerciseModel
+from .services import generate_random_workout, add_exercise
 from . import db
 from sqlalchemy import select
 from datetime import date
@@ -31,6 +31,32 @@ def get_workout():
         response = random_workout
         print(f"response = {jsonify(response)}")
     return jsonify(response)
+
+@app.route('/exercises', methods=['GET'])
+def get_exercises():
+    all_exercises = ExerciseModel.query.all()
+    exercises_list = [
+        {
+            "id": exercise.id,
+            "name": exercise.name,
+            "musclesWorked": exercise.muscles_worked.split(','),
+            "weight": exercise.weight
+        }
+        for exercise in all_exercises
+    ]
+    return jsonify(exercises_list)
+
+
+@app.route('/add_exercise', methods=['POST'])
+def add_exercise_route():
+    exercise_data = request.json
+    print(f"Recieved exercise data = {exercise_data}")
+    if 'name' not in exercise_data or 'musclesWorked' not in exercise_data:
+        return jsonify({"error": "Invalid input"}), 400
+
+    result = add_exercise(exercise_data)
+    print(f"added exercise! data={exercise_data}")
+    return jsonify(result), 201
 
 @app.route('/')
 def home():
