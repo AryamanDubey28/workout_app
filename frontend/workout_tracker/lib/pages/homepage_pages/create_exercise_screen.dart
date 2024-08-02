@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:workout_tracker/pages/homepage_pages/all_exercises.dart';
 import 'package:workout_tracker/services/workout_service.dart';
 import 'package:workout_tracker/utilities/platform_specific_button.dart';
 
@@ -127,6 +128,18 @@ class _CreateExerciseScreenState extends State<CreateExerciseScreen> {
                   );
                 },
               ),
+            ),
+            const SizedBox(height: 10),
+            TextButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => AllExercisesScreen(),
+                  ),
+                );
+              },
+              child: const Text('See All'),
             ),
             const SizedBox(height: 10),
             PlatformSpecificButton(

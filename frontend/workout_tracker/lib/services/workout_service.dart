@@ -26,10 +26,18 @@ class ApiService {
       }),
     );
 
-    if (response.statusCode == 201) {
-      print("Sent exercise from Flutter");
-    } else {
+    if (response.statusCode != 201) {
       throw Exception('Failed to add exercise');
+    }
+  }
+
+  Future<List<Map<String, dynamic>>> fetchExercises() async {
+    final response = await http.get(Uri.parse('$baseUrl/exercises'));
+
+    if (response.statusCode == 200) {
+      return List<Map<String, dynamic>>.from(json.decode(response.body));
+    } else {
+      throw Exception('Failed to load exercises');
     }
   }
 }
