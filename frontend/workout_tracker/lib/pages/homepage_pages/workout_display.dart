@@ -1,8 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:workout_tracker/pages/homepage_pages/create_exercise_screen.dart';
-import 'package:workout_tracker/pages/homepage_pages/exercise_card.dart';
-import 'package:workout_tracker/utilities/platform_specific_button.dart';
 
 class WorkoutDisplay extends StatelessWidget {
   final Map<String, dynamic> workout;
@@ -11,77 +7,238 @@ class WorkoutDisplay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: [
-          Container(
-            width: double.infinity,
-            height: 200,
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  Color.fromARGB(255, 11, 242, 19),
-                  Color.fromARGB(255, 69, 241, 75),
-                  Color.fromARGB(255, 126, 243, 130),
-                  Color.fromARGB(255, 183, 247, 185),
-                  Colors.white
-                ],
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
+    // Define the colors for the tiles
+    const Color tileColor1 = Colors.orange;
+    const Color tileColor2 = Colors.orangeAccent; // More mustard-like yellow
+    const Color tileColor3 = Colors.red;
+
+    return SafeArea(
+      child: Scaffold(
+        body: Padding(
+          padding: const EdgeInsets.all(4.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Title with gradient and add button
+              Container(
+                padding: const EdgeInsets.all(16.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: Text(
+                        'Workout',
+                        style: TextStyle(
+                          fontSize: 44,
+                          fontWeight: FontWeight.bold,
+                          foreground: Paint()
+                            ..shader = const LinearGradient(
+                              colors: <Color>[Colors.orange, Colors.red],
+                            ).createShader(
+                              const Rect.fromLTWH(0.0, 0.0, 200.0, 70.0),
+                            ),
+                        ),
+                      ),
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.add_circle,
+                          color: Colors.orange, size: 44),
+                      onPressed: () {
+                        // Add button functionality can be implemented later
+                      },
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 5),
+
+              // Row of tiles with added padding
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    _buildColorTile(tileColor1, '60 KG'),
+                    const SizedBox(width: 8), // Add space between tiles
+                    _buildColorTile(tileColor2, '3500 Kcal'),
+                    const SizedBox(width: 8), // Add space between tiles
+                    _buildColorTile(tileColor3, 'Done?'),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 10),
+
+              // Section with 3 widgets, including workout details
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        flex: 1,
+                        child: Column(
+                          children: [
+                            _buildStepsWidget(), // Method for 1200 Steps widget
+                            const SizedBox(height: 8),
+                            _buildThisWeekWidget(), // Method for This Week widget
+                          ],
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        flex: 1,
+                        child: _buildWorkoutDetailsBox(workout),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  // Helper method to build a colored tile with a label
+  Widget _buildColorTile(Color color, String label) {
+    return Expanded(
+      child: Container(
+        height: 100,
+        decoration: BoxDecoration(
+          color: color,
+          borderRadius: BorderRadius.circular(8.0),
+        ),
+        child: Center(
+          child: Text(
+            label,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  // Helper method to build the 1200 Steps widget
+  Widget _buildStepsWidget() {
+    return Expanded(
+      flex: 1,
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.red,
+          borderRadius: BorderRadius.circular(8.0),
+        ),
+        child: const Center(
+          child: Text(
+            '1200 Steps',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  // Helper method to build the This Week widget with a title
+  Widget _buildThisWeekWidget() {
+    return Expanded(
+      flex: 4,
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.orangeAccent,
+          borderRadius: BorderRadius.circular(8.0),
+        ),
+        child: const Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Text(
+                'This Week',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
-            child: const SafeArea(
+            Expanded(
               child: Center(
                 child: Text(
-                  'Workout',
+                  'Details about this week',
                   style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                    fontSize: 18,
                   ),
                 ),
               ),
             ),
-          ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  ExerciseCard(
-                    icon: Icons.fitness_center,
-                    title: 'Pushup',
-                    description: workout['pushup'],
-                  ),
-                  ExerciseCard(
-                    icon: Icons.fitness_center,
-                    title: 'Pullup',
-                    description: workout['pullup'],
-                  ),
-                  ExerciseCard(
-                    icon: Icons.fitness_center,
-                    title: 'Squat',
-                    description: workout['squat_lunge'],
-                  ),
-                  const SizedBox(height: 20),
-                  PlatformSpecificButton(
-                    color: CupertinoColors.systemGreen,
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const CreateExerciseScreen(),
-                        ),
-                      );
-                    },
-                    child: const Text('Create Exercise'),
-                  ),
-                ],
-              ),
-            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // Helper method to build the workout details box
+  Widget _buildWorkoutDetailsBox(Map<String, dynamic> workout) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.orange, // Retain original tile color
+        borderRadius: BorderRadius.circular(
+            12.0), // Increase border radius for softer corners
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1), // Add subtle shadow
+            blurRadius: 8,
+            offset: const Offset(0, 4),
           ),
         ],
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              'Workout Plan',
+              style: TextStyle(
+                color: Colors.white, // Use original text color
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 12),
+            Expanded(
+              child: ListView.separated(
+                itemCount: workout.values.length,
+                itemBuilder: (context, index) {
+                  return Text(
+                    '${workout.values.elementAt(index)}',
+                    style: const TextStyle(
+                      color: Colors
+                          .white, // Keep the original white text color for values
+                      fontSize: 18,
+                    ),
+                  );
+                },
+                separatorBuilder: (context, index) => const Divider(
+                  color: Colors
+                      .white24, // Use a lighter divider color for subtle separation
+                  thickness: 1,
+                  height: 20,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
