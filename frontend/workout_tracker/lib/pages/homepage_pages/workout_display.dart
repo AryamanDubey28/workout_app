@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 class WorkoutDisplay extends StatelessWidget {
@@ -171,14 +173,33 @@ class WorkoutDisplay extends StatelessWidget {
               ),
             ),
             Expanded(
-              child: Center(
-                child: Text(
-                  'Details about this week',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 8.0),
+                child: BarChart(), // Add the bar chart widget
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 12.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Daily Average',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
+                  SizedBox(height: 4),
+                  Text(
+                    '9987 Steps', // Placeholder value
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                    ),
+                  ),
+                ],
               ),
             ),
           ],
@@ -241,5 +262,44 @@ class WorkoutDisplay extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class BarChart extends StatelessWidget {
+  const BarChart({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return CustomPaint(
+      painter: BarChartPainter(),
+      child: Container(),
+    );
+  }
+}
+
+class BarChartPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = Colors.white
+      ..style = PaintingStyle.fill;
+
+    final barWidth = size.width / 8;
+    final random = Random();
+
+    for (int i = 0; i < 7; i++) {
+      final barHeight = random.nextDouble() * size.height * 0.6;
+      final left = i * (barWidth + 8); // Space between bars
+      final top = size.height - barHeight;
+      final right = left + barWidth;
+      final bottom = size.height;
+
+      canvas.drawRect(Rect.fromLTRB(left, top, right, bottom), paint);
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    return false;
   }
 }
