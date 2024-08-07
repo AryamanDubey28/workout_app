@@ -117,9 +117,12 @@ class WorkoutDisplay extends StatelessWidget {
           borderRadius: WorkoutStyles.borderRadius,
         ),
         child: Center(
-          child: Text(
-            label,
-            style: WorkoutStyles.tileTextStyle,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              label,
+              style: WorkoutStyles.tileTextStyle,
+            ),
           ),
         ),
       ),
@@ -175,6 +178,10 @@ class WorkoutDisplay extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Divider(
+                    color: Color.fromARGB(60, 64, 63, 63),
+                    thickness: 1,
+                  ),
                   Text(
                     'Daily Average',
                     style: WorkoutStyles.dailyAverageTextStyle,

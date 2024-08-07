@@ -1,23 +1,22 @@
 // ignore_for_file: unused_field
-
 import 'package:flutter/material.dart';
 
 class CustomNavigationBar extends StatefulWidget {
   final int selectedIndex;
   final ValueChanged<int> onTap;
   final List<String> items;
+  final List<Color> selectedIconColors; // New parameter
   final Color backgroundColor;
   final Color iconColor;
-  final Color selectedIconColor;
 
   const CustomNavigationBar({
     super.key,
     required this.selectedIndex,
     required this.onTap,
     required this.items,
+    required this.selectedIconColors,
     this.backgroundColor = Colors.white,
     this.iconColor = Colors.black,
-    this.selectedIconColor = Colors.blue,
   });
 
   @override
@@ -56,8 +55,6 @@ class _CustomNavigationBarState extends State<CustomNavigationBar>
 
   @override
   Widget build(BuildContext context) {
-    // Calculate padding and width dynamically
-
     return Container(
       decoration: BoxDecoration(
         color: widget.backgroundColor,
@@ -95,12 +92,14 @@ class _CustomNavigationBarState extends State<CustomNavigationBar>
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: isSelected
-                    ? widget.selectedIconColor.withOpacity(0.2)
+                    ? widget.selectedIconColors[index].withOpacity(0.2)
                     : Colors.transparent,
               ),
               child: Image.asset(
                 item,
-                color: isSelected ? widget.selectedIconColor : widget.iconColor,
+                color: isSelected
+                    ? widget.selectedIconColors[index]
+                    : widget.iconColor,
                 height: 25,
                 width: 25,
               ),

@@ -1,10 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:workout_tracker/login/main_page.dart';
 import 'package:workout_tracker/pages/food_tracking_pages/foodpage.dart';
 import 'package:workout_tracker/pages/homepage_pages/homepage.dart';
-import 'package:workout_tracker/pages/profile_pages/profilepage.dart';
 import 'package:workout_tracker/pages/stress_tracking_pages/stresspage.dart';
 import 'package:workout_tracker/utilities/custom_navigation_bar.dart';
 
@@ -24,7 +22,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
           primarySwatch: Colors.blue,
           visualDensity: VisualDensity.adaptivePlatformDensity),
-      home: const MainPage(),
+      home: const MyHomePage(),
     );
   }
 }
@@ -43,7 +41,6 @@ class _MyHomePageState extends State<MyHomePage> {
     const HomePage(),
     const CalorieTracking(),
     const StressTracking(),
-    const ProfilePage(),
   ];
 
   void _onItemTapped(int index) {
@@ -62,9 +59,13 @@ class _MyHomePageState extends State<MyHomePage> {
           'assets/images/gym-c.png',
           'assets/images/food-c.png',
           'assets/images/lotus-c.png',
-          'assets/images/profile.png',
         ],
         onTap: _onItemTapped,
+        selectedIconColors: const [
+          Colors.orange, // HomePage icon color
+          Colors.blue, // CalorieTracking icon color
+          Colors.purple, // StressTracking icon color
+        ],
       ),
     );
   }
