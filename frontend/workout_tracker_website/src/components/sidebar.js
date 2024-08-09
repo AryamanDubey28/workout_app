@@ -1,24 +1,34 @@
-import React from 'react';
-import { FaDumbbell, FaAppleAlt, FaRegSmile } from 'react-icons/fa'; // Importing icons from react-icons
+import React, { useState } from 'react';
+import { FaDumbbell, FaAppleAlt, FaRegSmile, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 
-const Sidebar = () => {
+const Sidebar = ({ onToggle }) => {
+    const [isMinimized, setIsMinimized] = useState(false);
+
+    const toggleSidebar = () => {
+        setIsMinimized(!isMinimized);
+        onToggle(!isMinimized); // Pass the updated state to the parent component
+    };
+
     return (
-        <div style={styles.sidebar}>
+        <div style={{ ...styles.sidebar, width: isMinimized ? '80px' : '250px' }}>
             <div style={styles.logo}>
-                <h2>Health App</h2>
+                {!isMinimized && <h2>Health App</h2>}
+            </div>
+            <div style={styles.toggleButton} onClick={toggleSidebar}>
+                {isMinimized ? <FaChevronRight /> : <FaChevronLeft />}
             </div>
             <div style={styles.menu}>
                 <div style={styles.menuItem}>
                     <FaDumbbell style={styles.icon} />
-                    <span>Workout</span>
+                    {!isMinimized && <span>Workout</span>}
                 </div>
                 <div style={styles.menuItem}>
                     <FaAppleAlt style={styles.icon} />
-                    <span>Food Tracking</span>
+                    {!isMinimized && <span>Food Tracking</span>}
                 </div>
                 <div style={styles.menuItem}>
                     <FaRegSmile style={styles.icon} />
-                    <span>Stress Tracking</span>
+                    {!isMinimized && <span>Stress Tracking</span>}
                 </div>
             </div>
         </div>
@@ -28,15 +38,18 @@ const Sidebar = () => {
 const styles = {
     sidebar: {
         height: '100vh',
-        width: '250px',
         backgroundColor: '#2c3e50',
         color: '#ecf0f1',
         display: 'flex',
         flexDirection: 'column',
-        padding: '20px'
+        padding: '20px',
+        transition: 'width 0.3s ease',
+        position: 'fixed', // Make sure the sidebar stays fixed on the page
+        top: 0,
+        left: 0,
     },
     logo: {
-        marginBottom: '30px',
+        marginBottom: '20px',
         textAlign: 'center',
     },
     menu: {
@@ -51,6 +64,16 @@ const styles = {
     },
     icon: {
         marginRight: '15px',
+        fontSize: '20px',
+    },
+    toggleButton: {
+        cursor: 'pointer',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '10px',
+        borderBottom: '1px solid #34495e',
+        marginBottom: '20px',
     },
 };
 
