@@ -115,6 +115,13 @@ class WorkoutDisplay extends StatelessWidget {
         decoration: BoxDecoration(
           color: color,
           borderRadius: WorkoutStyles.borderRadius,
+          boxShadow: const [
+            BoxShadow(
+              color: Colors.grey, // Shadow with a hint of the tile color
+              blurRadius: 8,
+              offset: Offset(0, 4),
+            ),
+          ],
         ),
         child: Center(
           child: Padding(
@@ -137,6 +144,13 @@ class WorkoutDisplay extends StatelessWidget {
         decoration: const BoxDecoration(
           color: WorkoutStyles.stepsColor,
           borderRadius: WorkoutStyles.borderRadius,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey, // Shadow with a hint of the tile color
+              blurRadius: 8,
+              offset: Offset(0, 4),
+            ),
+          ],
         ),
         child: const Center(
           child: Text(
@@ -156,6 +170,13 @@ class WorkoutDisplay extends StatelessWidget {
         decoration: const BoxDecoration(
           color: WorkoutStyles.thisWeekColor,
           borderRadius: WorkoutStyles.borderRadius,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey, // Shadow with a hint of the tile color
+              blurRadius: 8,
+              offset: Offset(0, 4),
+            ),
+          ],
         ),
         child: const Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -206,7 +227,13 @@ class WorkoutDisplay extends StatelessWidget {
       decoration: const BoxDecoration(
         color: WorkoutStyles.workoutDetailsColor,
         borderRadius: WorkoutStyles.borderRadius,
-        boxShadow: WorkoutStyles.boxShadow,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey,
+            blurRadius: 8,
+            offset: Offset(0, 4),
+          ),
+        ],
       ),
       child: Padding(
         padding: const EdgeInsets.all(16.0),

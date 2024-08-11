@@ -39,7 +39,7 @@ class WorkoutStyles {
 
   static const TextStyle workoutPlanTitleTextStyle = TextStyle(
     color: Colors.white,
-    fontSize: 22,
+    fontSize: 24,
     fontWeight: FontWeight.bold,
   );
 
