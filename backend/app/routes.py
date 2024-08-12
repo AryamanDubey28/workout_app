@@ -1,9 +1,55 @@
 from flask import current_app as app, jsonify,request
-from .models import Workout, Exercise as ExerciseModel
+from .models import Workout, Exercise as ExerciseModel, User
 from .services import generate_random_workout, add_exercise
 from . import db
 from sqlalchemy import select
 from datetime import date
+
+
+@app.route('/user', methods=['POST'])
+def create_user():
+    user_data = request.json
+    new_user = User(
+        age=user_data['age'],
+        gender=user_data['gender'],
+        height=user_data['height'],
+        weight=user_data['weight']
+    )
+    db.session.add(new_user)
+    db.session.commit()
+    return jsonify({"message": "User created successfully", "user_id": new_user.id}), 201
+
+
+@app.route('/user/<int:user_id>', methods=['PUT'])
+def update_user(user_id):
+    user = User.query.get_or_404(user_id)
+    user_data = request.json
+    user.age = user_data.get('age', user.age)
+    user.gender = user_data.get('gender', user.gender)
+    user.height = user_data.get('height', user.height)
+    user.weight = user_data.get('weight', user.weight)
+    user.steps_taken = user_data.get('steps_taken', user.steps_taken)
+    user.worked_out_today = user_data.get('worked_out_today', user.worked_out_today)
+
+    db.session.commit()
+    return jsonify({"message": "User updated successfully"}), 200
+
+
+@app.route('/user/<int:user_id>/log_run', methods=['POST'])
+def log_run(user_id):
+    user = User.query.get_or_404(user_id)
+    run_data = request.json
+    distance_km = run_data.get('distance_km')
+    time_minutes = run_data.get('time_minutes')
+
+    calories_burned = user.log_run(distance_km, time_minutes)
+    db.session.commit()
+
+    return jsonify({
+        "message": "Run logged successfully",
+        "calories_burned": calories_burned,
+        "worked_out_today": user.worked_out_today
+    }), 200
 
 @app.route('/workout', methods=['GET'])
 def get_workout():

@@ -1,6 +1,7 @@
 from . import db
-from sqlalchemy import String, Integer, Date,Float
+from sqlalchemy import String, Integer, Date,Float, Boolean, DateTime
 from sqlalchemy.orm import mapped_column
+from datetime import datetime
 
 class Workout(db.Model):
     __tablename__ = "workouts"
@@ -23,3 +24,38 @@ class Exercise(db.Model):
 
     def __repr__(self):
         return f"<Exercise(id={self.id}, name={self.name}, muscles_worked={self.muscles_worked}, weight={self.weight})>"
+
+
+class User(db.Model):
+    __tablename__ = "users"
+    id = mapped_column(Integer, primary_key=True)
+    age = mapped_column(Integer, nullable=False)
+    gender = mapped_column(String(10), nullable=False)
+    height = mapped_column(Float, nullable=False)  # in centimeters
+    weight = mapped_column(Float, nullable=False)  # in kilograms
+    steps_taken = mapped_column(Integer, default=0)
+    worked_out_today = mapped_column(Boolean, default=False)
+    last_run = mapped_column(DateTime, nullable=True)
+
+    def log_run(self, distance_km, time_minutes):
+        """Logs a run and calculates calories burned based on distance or time."""
+        calories_burned = self.calculate_calories_burned(distance_km, time_minutes)
+        self.worked_out_today = True
+        self.last_run = datetime.now()
+        return calories_burned
+
+    def calculate_calories_burned(self, distance_km, time_minutes):
+        """Simple formula to calculate calories burned."""
+        MET = 9.8  # Metabolic equivalent for running (~9.8 METs for 8 km/h)
+        weight_kg = self.weight
+
+        # Calories burned = MET * weight_kg * time_hours
+        time_hours = time_minutes / 60
+        calories_burned = MET * weight_kg * time_hours
+
+        # Adjust calories based on distance as a secondary factor
+        calories_burned += 0.75 * weight_kg * distance_km  # Adjust multiplier as needed
+        return calories_burned
+
+    def __repr__(self):
+        return f"<User(id={self.id}, age={self.age}, gender={self.gender}, height={self.height}, weight={self.weight})>"
