@@ -1,12 +1,32 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:firebase_auth/firebase_auth.dart';
 
 class ApiService {
   final String baseUrl = 'http://127.0.0.1:5000';
 
-  // Fetch the workout for today
+  // Method to get the Firebase ID token
+  Future<String?> _getIdToken({bool requireAuth = true}) async {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      return await user.getIdToken();
+    } else if (requireAuth) {
+      throw Exception('No user logged in');
+    } else {
+      return null;
+    }
+  }
+
+  // Fetch the workout for today (Requires Authorization)
   Future<Map<String, dynamic>> fetchWorkout() async {
-    final response = await http.get(Uri.parse('$baseUrl/workout'));
+    final idToken = await _getIdToken();
+    final response = await http.get(
+      Uri.parse('$baseUrl/workout'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $idToken',
+      },
+    );
 
     if (response.statusCode == 200) {
       return json.decode(response.body);
@@ -15,12 +35,16 @@ class ApiService {
     }
   }
 
-  // Add a new exercise
+  // Add a new exercise (Might require authorization based on your app's logic)
   Future<void> addExercise(String name, List<String> musclesWorked,
       {double? weight}) async {
+    final idToken = await _getIdToken();
     final response = await http.post(
       Uri.parse('$baseUrl/add_exercise'),
-      headers: {'Content-Type': 'application/json'},
+      headers: {
+        'Content-Type': 'application/json',
+        if (idToken != null) 'Authorization': 'Bearer $idToken',
+      },
       body: json.encode({
         'name': name,
         'musclesWorked': musclesWorked,
@@ -33,9 +57,12 @@ class ApiService {
     }
   }
 
-  // Fetch all exercises
+  // Fetch all exercises (Might not require authorization if public)
   Future<List<Map<String, dynamic>>> fetchExercises() async {
-    final response = await http.get(Uri.parse('$baseUrl/exercises'));
+    final response = await http.get(
+      Uri.parse('$baseUrl/exercises'),
+      headers: {'Content-Type': 'application/json'},
+    );
 
     if (response.statusCode == 200) {
       return List<Map<String, dynamic>>.from(json.decode(response.body));
@@ -44,12 +71,16 @@ class ApiService {
     }
   }
 
-  // Create a new user
+  // Create a new user (Requires Authorization)
   Future<Map<String, dynamic>> createUser(
       int age, String gender, double height, double weight) async {
+    final idToken = await _getIdToken();
     final response = await http.post(
       Uri.parse('$baseUrl/user'),
-      headers: {'Content-Type': 'application/json'},
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $idToken',
+      },
       body: json.encode({
         'age': age,
         'gender': gender,
@@ -65,17 +96,21 @@ class ApiService {
     }
   }
 
-  // Update an existing user
-  Future<void> updateUser(int userId,
+  // Update an existing user (Requires Authorization)
+  Future<void> updateUser(String userId,
       {int? age,
       String? gender,
       double? height,
       double? weight,
       int? stepsTaken,
       bool? workedOutToday}) async {
+    final idToken = await _getIdToken();
     final response = await http.put(
       Uri.parse('$baseUrl/user/$userId'),
-      headers: {'Content-Type': 'application/json'},
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $idToken',
+      },
       body: json.encode({
         'age': age,
         'gender': gender,
@@ -91,12 +126,16 @@ class ApiService {
     }
   }
 
-  // Log a run for a user
-  Future<Map<String, dynamic>> logRun(int userId,
+  // Log a run for a user (Requires Authorization)
+  Future<Map<String, dynamic>> logRun(String userId,
       {double? distanceKm, double? timeMinutes}) async {
+    final idToken = await _getIdToken();
     final response = await http.post(
       Uri.parse('$baseUrl/user/$userId/log_run'),
-      headers: {'Content-Type': 'application/json'},
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $idToken',
+      },
       body: json.encode({
         'distance_km': distanceKm,
         'time_minutes': timeMinutes,
