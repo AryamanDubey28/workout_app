@@ -100,7 +100,7 @@ def get_workout():
             "squat_lunge": workout.squat
         }
     else:
-        response = generate_random_workout() #TODO: Fix this call, should query user specific exercises
+        response = generate_random_workout(user_id=uid)
         workout = Workout(
             user_id=uid,  # Associate the workout with the authenticated user
             date=today,

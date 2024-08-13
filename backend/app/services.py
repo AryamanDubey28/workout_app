@@ -58,9 +58,9 @@ exercises = {
     ],
 }
 
-def generate_random_workout():
+def generate_random_workout(user_id):
     # Fetch user-defined exercises from the database
-    user_exercises = ExerciseModel.query.all() #TODO: Fix, should query user specifc exercises too
+    user_exercises = ExerciseModel.query.filter_by(user_id=user_id).all()
 
     # Combine predefined and user-defined exercises
     combined_exercises = {
