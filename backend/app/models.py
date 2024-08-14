@@ -1,7 +1,8 @@
 from . import db
 from sqlalchemy import String, Integer, Date,Float, Boolean, DateTime, ForeignKey
 from sqlalchemy.orm import mapped_column
-from datetime import datetime
+from datetime import datetime, date, timedelta
+
 
 class Workout(db.Model):
     __tablename__ = "workouts"
@@ -36,7 +37,23 @@ class User(db.Model):
     weight = mapped_column(Float, nullable=False)  # in kilograms
     steps_taken = mapped_column(Integer, default=0)
     worked_out_today = mapped_column(Boolean, default=False)
+    streak = db.Column(db.Integer, default=0)
+    last_workout_date = db.Column(db.Date, nullable=True)
     last_run = mapped_column(DateTime, nullable=True)
+
+    def update_streak(self):
+        """Updates user's streak of working out"""
+        today = date.today()
+        if self.last_workout_date == today:
+            return  # No need to update streak if it's already done for today
+
+        if self.last_workout_date == today - timedelta(days=1):
+            self.streak += 1  # Continue the streak
+        else:
+            self.streak = 1  # Reset streak
+
+        self.last_workout_date = today
+        self.worked_out_today = True
 
     def log_run(self, distance_km, time_minutes):
         """Logs a run and calculates calories burned based on distance or time."""

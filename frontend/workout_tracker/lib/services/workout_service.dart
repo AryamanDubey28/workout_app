@@ -54,6 +54,24 @@ class ApiService {
     }
   }
 
+  Future<int> fetchStreak(String userId) async {
+    final idToken = await _getIdToken();
+    final response = await http.get(
+      Uri.parse('$baseUrl/user/$userId/streak'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $idToken',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      return data['streak'];
+    } else {
+      throw Exception('Failed to load streak');
+    }
+  }
+
   // Add a new exercise (Might require authorization based on your app's logic)
   Future<void> addExercise(String name, List<String> musclesWorked,
       {double? weight}) async {

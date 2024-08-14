@@ -125,10 +125,26 @@ def update_workout_status(user_id):
     if not user:
         return jsonify({"error": "User not found"}), 404
 
-    user.worked_out_today = worked_out_today
-    db.session.commit()
+    if worked_out_today:
+        user.update_streak()
+    else:
+        user.worked_out_today = False
 
-    return jsonify({"message": "Workout status updated"}), 200
+    db.session.commit()
+    return jsonify({"message": "Workout status and streak updated"}), 200
+
+
+@app.route('/user/<user_id>/streak', methods=['GET'])
+def get_streak(user_id):
+    uid = verify_firebase_token()
+    if not uid or uid != user_id:
+        return jsonify({"error": "Unauthorized"}), 401
+
+    user = User.query.filter_by(id=user_id).first()
+    if not user:
+        return jsonify({"error": "User not found"}), 404
+
+    return jsonify({"streak": user.streak}), 200
 
 
 @app.route('/exercises', methods=['GET'])
