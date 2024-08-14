@@ -112,6 +112,24 @@ def get_workout():
         db.session.commit()
     return jsonify(response)
 
+@app.route('/user/<user_id>/update_workout_status', methods=['PUT'])
+def update_workout_status(user_id):
+    uid = verify_firebase_token()
+    if not uid or uid != user_id:
+        return jsonify({"error": "Unauthorized"}), 401
+
+    data = request.json
+    worked_out_today = data.get('worked_out_today')
+
+    user = User.query.filter_by(id=user_id).first()
+    if not user:
+        return jsonify({"error": "User not found"}), 404
+
+    user.worked_out_today = worked_out_today
+    db.session.commit()
+
+    return jsonify({"message": "Workout status updated"}), 200
+
 
 @app.route('/exercises', methods=['GET'])
 def get_exercises():

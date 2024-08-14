@@ -35,6 +35,25 @@ class ApiService {
     }
   }
 
+  // Update the 'worked_out_today' field for the user
+  Future<void> markWorkoutCompleted(String userId) async {
+    final idToken = await _getIdToken();
+    final response = await http.put(
+      Uri.parse('$baseUrl/user/$userId/update_workout_status'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $idToken',
+      },
+      body: json.encode({
+        'worked_out_today': true,
+      }),
+    );
+
+    if (response.statusCode != 200) {
+      throw Exception('Failed to update workout status');
+    }
+  }
+
   // Add a new exercise (Might require authorization based on your app's logic)
   Future<void> addExercise(String name, List<String> musclesWorked,
       {double? weight}) async {
