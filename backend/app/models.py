@@ -1,5 +1,5 @@
 from . import db
-from sqlalchemy import String, Integer, Date,Float, Boolean, DateTime, ForeignKey
+from sqlalchemy import String, Integer, Date, Float, Boolean, DateTime, ForeignKey, Index
 from sqlalchemy.orm import mapped_column
 from datetime import datetime, date, timedelta
 
@@ -85,6 +85,10 @@ class DailySteps(db.Model):
     user_id = mapped_column(String, ForeignKey('users.id'), nullable=False)
     date = mapped_column(Date, nullable=False)
     steps = mapped_column(Integer, nullable=False)
+
+    __table_args__ = (
+        Index('idx_user_date', 'user_id', 'date'),
+    )
 
     def __repr__(self):
         return f"<DailySteps(user_id={self.user_id}, date={self.date}, steps={self.steps})>"
