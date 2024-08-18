@@ -77,3 +77,14 @@ class User(db.Model):
 
     def __repr__(self):
         return f"<User(id={self.id}, age={self.age}, gender={self.gender}, height={self.height}, weight={self.weight})>"
+
+
+class DailySteps(db.Model):
+    __tablename__ = "daily_steps"
+    id = mapped_column(Integer, primary_key=True)
+    user_id = mapped_column(String, ForeignKey('users.id'), nullable=False)
+    date = mapped_column(Date, nullable=False)
+    steps = mapped_column(Integer, nullable=False)
+
+    def __repr__(self):
+        return f"<DailySteps(user_id={self.user_id}, date={self.date}, steps={self.steps})>"

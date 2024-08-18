@@ -1,9 +1,9 @@
 from flask import current_app as app, jsonify, request
-from .models import Workout, Exercise as ExerciseModel, User
+from .models import Workout, Exercise as ExerciseModel, User, DailySteps
 from .services import generate_random_workout, add_exercise
 from . import db
 from sqlalchemy import select
-from datetime import date
+from datetime import date, datetime
 from firebase_admin import auth as firebase_auth
 
 
@@ -181,6 +181,45 @@ def add_exercise_route():
     result = add_exercise(exercise_data)
     print(f"Added exercise! data={exercise_data}")
     return jsonify(result), 201
+
+
+# routes.py
+
+@app.route('/user/<user_id>/steps', methods=['POST'])
+def add_or_update_steps(user_id):
+    uid = verify_firebase_token()
+    if not uid or uid != user_id:
+        return jsonify({"error": "Unauthorized"}), 401
+
+    data = request.json
+    date_str = data.get('date')
+    steps = data.get('steps')
+
+    if not date_str or steps is None:
+        return jsonify({"error": "Invalid input"}), 400
+
+    date = datetime.strptime(date_str, "%Y-%m-%d").date()
+    daily_steps = DailySteps.query.filter_by(user_id=user_id, date=date).first()
+
+    if daily_steps:
+        daily_steps.steps = steps  # Update if exists
+    else:
+        daily_steps = DailySteps(user_id=user_id, date=date, steps=steps)
+        db.session.add(daily_steps)
+
+    db.session.commit()
+    return jsonify({"message": "Steps added/updated successfully"}), 200
+
+@app.route('/user/<user_id>/steps', methods=['GET'])
+def get_steps_history(user_id):
+    uid = verify_firebase_token()
+    if not uid or uid != user_id:
+        return jsonify({"error": "Unauthorized"}), 401
+
+    steps_history = DailySteps.query.filter_by(user_id=user_id).order_by(DailySteps.date.desc()).all()
+    history_list = [{"date": step.date.strftime("%Y-%m-%d"), "steps": step.steps} for step in steps_history]
+
+    return jsonify(history_list), 200
 
 
 @app.route('/')

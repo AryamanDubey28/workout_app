@@ -185,4 +185,40 @@ class ApiService {
       throw Exception('Failed to log run');
     }
   }
+
+  Future<void> addOrUpdateSteps(String userId, int steps, String date) async {
+    final idToken = await _getIdToken();
+    final response = await http.post(
+      Uri.parse('$baseUrl/user/$userId/steps'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $idToken',
+      },
+      body: json.encode({
+        'date': date,
+        'steps': steps,
+      }),
+    );
+
+    if (response.statusCode != 200) {
+      throw Exception('Failed to add/update steps');
+    }
+  }
+
+  Future<List<Map<String, dynamic>>> fetchStepsHistory(String userId) async {
+    final idToken = await _getIdToken();
+    final response = await http.get(
+      Uri.parse('$baseUrl/user/$userId/steps'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $idToken',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      return List<Map<String, dynamic>>.from(json.decode(response.body));
+    } else {
+      throw Exception('Failed to load steps history');
+    }
+  }
 }
