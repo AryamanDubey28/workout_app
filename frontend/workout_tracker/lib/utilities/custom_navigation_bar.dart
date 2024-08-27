@@ -20,10 +20,10 @@ class CustomNavigationBar extends StatefulWidget {
   });
 
   @override
-  _CustomNavigationBarState createState() => _CustomNavigationBarState();
+  CustomNavigationBarState createState() => CustomNavigationBarState();
 }
 
-class _CustomNavigationBarState extends State<CustomNavigationBar>
+class CustomNavigationBarState extends State<CustomNavigationBar>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;

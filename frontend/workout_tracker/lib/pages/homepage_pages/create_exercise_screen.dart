@@ -8,10 +8,10 @@ class CreateExerciseScreen extends StatefulWidget {
   const CreateExerciseScreen({super.key});
 
   @override
-  _CreateExerciseScreenState createState() => _CreateExerciseScreenState();
+  CreateExerciseScreenState createState() => CreateExerciseScreenState();
 }
 
-class _CreateExerciseScreenState extends State<CreateExerciseScreen> {
+class CreateExerciseScreenState extends State<CreateExerciseScreen> {
   final TextEditingController _exerciseNameController = TextEditingController();
   final Set<String> _selectedMuscles = {};
 
@@ -50,8 +50,10 @@ class _CreateExerciseScreenState extends State<CreateExerciseScreen> {
           _exerciseNameController.text,
           _selectedMuscles.toList(),
         );
+        if (!mounted) return;
         Navigator.pop(context, 'Exercise Saved');
       } catch (error) {
+        if (!mounted) return;
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Failed to save exercise')),
         );

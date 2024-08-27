@@ -5,10 +5,10 @@ class WaterTrackingSection extends StatefulWidget {
   const WaterTrackingSection({super.key});
 
   @override
-  _WaterTrackingSectionState createState() => _WaterTrackingSectionState();
+  WaterTrackingSectionState createState() => WaterTrackingSectionState();
 }
 
-class _WaterTrackingSectionState extends State<WaterTrackingSection> {
+class WaterTrackingSectionState extends State<WaterTrackingSection> {
   final int totalGlasses = 8;
   int filledGlasses = 0;
   bool showSaveButton = false;

@@ -14,10 +14,10 @@ class FoodEntrySection extends StatefulWidget {
   });
 
   @override
-  _FoodEntrySectionState createState() => _FoodEntrySectionState();
+  FoodEntrySectionState createState() => FoodEntrySectionState();
 }
 
-class _FoodEntrySectionState extends State<FoodEntrySection> {
+class FoodEntrySectionState extends State<FoodEntrySection> {
   final List<String> _foodItems = [];
   bool _showMore = false;
 

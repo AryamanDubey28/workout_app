@@ -24,27 +24,20 @@ class _LoginPageState extends State<LoginPage> {
           email: emailController.text.trim(),
           password: passwordController.text.trim());
     } on FirebaseAuthException catch (e) {
+      if (!mounted) return;
+      String message = 'An error occurred';
       if (e.code == 'user-not-found') {
-        await showOkAlertDialog(
-          context: context,
-          title: 'Error',
-          message: 'No user found for that email.',
-        );
+        message = 'No user found for that email.';
       } else if (e.code == 'wrong-password') {
-        await showOkAlertDialog(
-          context: context,
-          title: 'Error',
-          message: 'Incorrect Password provided',
-        );
+        message = 'Incorrect Password provided';
       } else {
-        String outputString =
-            e.toString().replaceAll(RegExp(r'\[.*?\]\s*'), '');
-        await showOkAlertDialog(
-          context: context,
-          title: 'Error',
-          message: outputString,
-        );
+        message = e.toString().replaceAll(RegExp(r'\[.*?\]\s*'), '');
       }
+      await showOkAlertDialog(
+        context: context,
+        title: 'Error',
+        message: message,
+      );
     }
   }
 
