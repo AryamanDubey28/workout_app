@@ -1,5 +1,5 @@
 from . import db
-from sqlalchemy import String, Integer, Date, Float, Boolean, DateTime, ForeignKey, Index, Text
+from sqlalchemy import String, Integer, Date, Float, Boolean, DateTime, ForeignKey, Index, Text, func
 from sqlalchemy.orm import mapped_column
 from datetime import datetime, date, timedelta
 
@@ -74,6 +74,41 @@ class User(db.Model):
         # Adjust calories based on distance as a secondary factor
         calories_burned += 0.75 * weight_kg * distance_km  # Adjust multiplier as needed
         return calories_burned
+
+    def get_stress_level_history(self, start_date=None, end_date=None):
+        """
+        Retrieves the stress level history for the user.
+        
+        :param start_date: Optional start date for the history (inclusive)
+        :param end_date: Optional end date for the history (inclusive)
+        :return: List of tuples (date, stress_level)
+        """
+        query = JournalEntry.query.filter_by(user_id=self.id).order_by(JournalEntry.date)
+        
+        if start_date:
+            query = query.filter(JournalEntry.date >= start_date)
+        if end_date:
+            query = query.filter(JournalEntry.date <= end_date)
+        
+        return [(entry.date, entry.stress_level) for entry in query.all()]
+
+    def get_average_stress_level(self, start_date=None, end_date=None):
+        """
+        Calculates the average stress level for the user.
+        
+        :param start_date: Optional start date for the calculation (inclusive)
+        :param end_date: Optional end date for the calculation (inclusive)
+        :return: Average stress level or None if no entries
+        """
+        query = JournalEntry.query.filter_by(user_id=self.id)
+        
+        if start_date:
+            query = query.filter(JournalEntry.date >= start_date)
+        if end_date:
+            query = query.filter(JournalEntry.date <= end_date)
+        
+        result = query.with_entities(func.avg(JournalEntry.stress_level)).scalar()
+        return float(result) if result is not None else None
 
     def __repr__(self):
         return f"<User(id={self.id}, age={self.age}, gender={self.gender}, height={self.height}, weight={self.weight})>"

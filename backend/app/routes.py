@@ -301,6 +301,45 @@ def delete_journal_entry(user_id, entry_id):
     db.session.commit()
     return jsonify({"message": "Journal entry deleted"}), 200
 
+@app.route('/user/<string:user_id>/stress_history', methods=['GET'])
+def get_stress_history(user_id):
+    uid = verify_firebase_token()
+    if not uid or uid != user_id:
+        return jsonify({"error": "Unauthorized"}), 401
+
+    user = User.query.get_or_404(user_id)
+    
+    start_date = request.args.get('start_date')
+    end_date = request.args.get('end_date')
+    
+    if start_date:
+        start_date = datetime.strptime(start_date, "%Y-%m-%d").date()
+    if end_date:
+        end_date = datetime.strptime(end_date, "%Y-%m-%d").date()
+
+    history = user.get_stress_level_history(start_date, end_date)
+    return jsonify([{"date": date.isoformat(), "stress_level": level} for date, level in history]), 200
+
+@app.route('/user/<string:user_id>/average_stress', methods=['GET'])
+def get_average_stress(user_id):
+    uid = verify_firebase_token()
+    if not uid or uid != user_id:
+        return jsonify({"error": "Unauthorized"}), 401
+
+    user = User.query.get_or_404(user_id)
+    
+    start_date = request.args.get('start_date')
+    end_date = request.args.get('end_date')
+    
+    if start_date:
+        start_date = datetime.strptime(start_date, "%Y-%m-%d").date()
+    if end_date:
+        end_date = datetime.strptime(end_date, "%Y-%m-%d").date()
+
+    avg_stress = user.get_average_stress_level(start_date, end_date)
+    return jsonify({"average_stress_level": avg_stress}), 200
+
 @app.route('/')
 def home():
-    return "Welcome to the Workout API!"
+    return "Welcome to the Thrive HealthAPI!"
+
