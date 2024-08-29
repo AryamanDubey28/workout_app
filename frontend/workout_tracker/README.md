@@ -16,6 +16,6 @@ Thrive Health is your all-in-one solution for comprehensive health tracking and 
 
 ## Support
 
-For any questions or issues, please open a GitHub issue or contact our support team at support@thrivehealth.com.
+For any questions or issues, please open a GitHub issue or contact me at arrydube2823@gmail.com
 
 Join us on our mission to empower individuals to take control of their health and thrive!
