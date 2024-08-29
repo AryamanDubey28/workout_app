@@ -5,10 +5,10 @@ class NutritionalSummary extends StatefulWidget {
   const NutritionalSummary({super.key});
 
   @override
-  _NutritionalSummaryState createState() => _NutritionalSummaryState();
+  NutritionalSummaryState createState() => NutritionalSummaryState();
 }
 
-class _NutritionalSummaryState extends State<NutritionalSummary>
+class NutritionalSummaryState extends State<NutritionalSummary>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;

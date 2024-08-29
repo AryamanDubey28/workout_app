@@ -30,14 +30,16 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     try {
       await FirebaseAuth.instance
           .sendPasswordResetEmail(email: emailController.text.trim());
-      showPasswordResetDialog();
+      if (mounted) showPasswordResetDialog();
     } on FirebaseAuthException catch (e) {
       String outputString = e.toString().replaceAll(RegExp(r'\[.*?\]\s*'), '');
-      await showOkAlertDialog(
-        context: context,
-        title: 'Error',
-        message: outputString,
-      );
+      if (mounted) {
+        await showOkAlertDialog(
+          context: context,
+          title: 'Error',
+          message: outputString,
+        );
+      }
     }
   }
 

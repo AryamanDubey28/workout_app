@@ -5,7 +5,7 @@ import 'package:workout_tracker/services/workout_service.dart';
 class AllExercisesScreen extends StatelessWidget {
   final ApiService apiService = ApiService();
 
-  AllExercisesScreen({Key? key}) : super(key: key);
+  AllExercisesScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

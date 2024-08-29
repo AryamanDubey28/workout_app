@@ -10,10 +10,10 @@ class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
 
   @override
-  _ProfilePageState createState() => _ProfilePageState();
+  ProfilePageState createState() => ProfilePageState();
 }
 
-class _ProfilePageState extends State<ProfilePage> {
+class ProfilePageState extends State<ProfilePage> {
   final _auth = FirebaseAuth.instance;
   late User _user;
   String? _profileImageUrl;
@@ -65,14 +65,15 @@ class _ProfilePageState extends State<ProfilePage> {
 
       if (pickedFile != null) {
         setState(() {
-          _profileImageUrl =
-              pickedFile.path; // Temporary, replace with uploaded image URL
+          _profileImageUrl = pickedFile.path;
         });
       }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to pick image: $e')),
-      );
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to pick image: $e')),
+        );
+      }
     }
   }
 
@@ -83,13 +84,17 @@ class _ProfilePageState extends State<ProfilePage> {
       setState(() {
         _user = _auth.currentUser!;
       });
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Profile updated successfully!')),
-      );
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Profile updated successfully!')),
+        );
+      }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to update profile: $e')),
-      );
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to update profile: $e')),
+        );
+      }
     }
   }
 
@@ -158,13 +163,13 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   void _showEditProfileDialog(BuildContext context) {
-    final _nameController = TextEditingController(text: _user.displayName);
+    final nameController = TextEditingController(text: _user.displayName);
     showTextInputDialog(
       context: context,
       title: 'Edit Profile',
       textFields: [
         DialogTextField(
-          initialText: _nameController.text,
+          initialText: nameController.text,
           hintText: 'Name',
         ),
       ],

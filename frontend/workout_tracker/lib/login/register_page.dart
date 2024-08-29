@@ -43,11 +43,13 @@ class _RegisterPageState extends State<RegisterPage> {
       } catch (e) {
         String outputString =
             e.toString().replaceAll(RegExp(r'\[.*?\]\s*'), '');
-        await showOkAlertDialog(
-          context: context,
-          title: 'Error',
-          message: outputString,
-        );
+        if (mounted) {
+          await showOkAlertDialog(
+            context: context,
+            title: 'Error',
+            message: outputString,
+          );
+        }
       }
     }
   }
