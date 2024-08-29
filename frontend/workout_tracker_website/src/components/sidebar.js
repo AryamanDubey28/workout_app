@@ -1,35 +1,59 @@
-import React, { useState } from 'react';
-import { FaDumbbell, FaAppleAlt, FaRegSmile, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import React, { useState, useEffect } from 'react';
+import { FaChevronLeft, FaChevronRight, FaUser, FaInfoCircle, FaDollarSign } from 'react-icons/fa';
 
 const Sidebar = ({ onToggle }) => {
     const [isMinimized, setIsMinimized] = useState(false);
+    const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth <= 768);
+        };
+
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     const toggleSidebar = () => {
         setIsMinimized(!isMinimized);
-        onToggle(!isMinimized); // Pass the updated state to the parent component
+        onToggle(!isMinimized);
     };
+
+    const renderMenuItems = () => (
+        <>
+            <div style={styles.menuItem}>
+                <FaDollarSign style={styles.icon} />
+                {!isMinimized && <span>Pricing</span>}
+            </div>
+            <div style={styles.menuItem}>
+                <FaUser style={styles.icon} />
+                {!isMinimized && <span>Profile</span>}
+            </div>
+            <div style={styles.menuItem}>
+                <FaInfoCircle style={styles.icon} />
+                {!isMinimized && <span>About</span>}
+            </div>
+        </>
+    );
+
+    if (isMobile) {
+        return (
+            <div style={styles.mobileMenu}>
+                {renderMenuItems()}
+            </div>
+        );
+    }
 
     return (
         <div style={{ ...styles.sidebar, width: isMinimized ? '80px' : '250px' }}>
             <div style={styles.logo}>
-                {!isMinimized && <h2>Health App</h2>}
+                {!isMinimized && <h2>Thrive Health</h2>}
             </div>
             <div style={styles.toggleButton} onClick={toggleSidebar}>
                 {isMinimized ? <FaChevronRight /> : <FaChevronLeft />}
             </div>
             <div style={styles.menu}>
-                <div style={styles.menuItem}>
-                    <FaDumbbell style={styles.icon} />
-                    {!isMinimized && <span>Workout</span>}
-                </div>
-                <div style={styles.menuItem}>
-                    <FaAppleAlt style={styles.icon} />
-                    {!isMinimized && <span>Food Tracking</span>}
-                </div>
-                <div style={styles.menuItem}>
-                    <FaRegSmile style={styles.icon} />
-                    {!isMinimized && <span>Stress Tracking</span>}
-                </div>
+                {renderMenuItems()}
             </div>
         </div>
     );
@@ -74,6 +98,19 @@ const styles = {
         padding: '10px',
         borderBottom: '1px solid #34495e',
         marginBottom: '20px',
+    },
+    mobileMenu: {
+        display: 'flex',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        backgroundColor: '#2c3e50',
+        color: '#ecf0f1',
+        padding: '10px',
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        zIndex: 1000,
     },
 };
 
