@@ -3,6 +3,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from firebase_admin import credentials, initialize_app
 
+
 db = SQLAlchemy()
 
 def create_app():
@@ -24,7 +25,8 @@ def create_app():
     initialize_app(cred)
 
     with app.app_context():
-        from .routes import auth_routes, user_routes, workout_routes, exercise_routes, steps_routes, journal_routes
+        from .routes import home_routes,auth_routes, user_routes, workout_routes, exercise_routes, steps_routes, journal_routes
+        app.register_blueprint(home_routes.bp)
         app.register_blueprint(auth_routes.bp)
         app.register_blueprint(user_routes.bp)
         app.register_blueprint(workout_routes.bp)
@@ -35,6 +37,9 @@ def create_app():
         db.create_all()
 
     return app
+
+
+
 
 # import json
 # from flask import Flask
