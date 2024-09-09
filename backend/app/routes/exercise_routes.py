@@ -1,4 +1,3 @@
-## app/routes/exercise.py
 from flask import Blueprint, jsonify, request
 from app.utils.auth import verify_firebase_token
 from app.models.exercise_model import Exercise

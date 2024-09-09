@@ -7,9 +7,11 @@ from datetime import datetime, date, timedelta
 
 class User(db.Model):
     __tablename__ = "users"
-    id = mapped_column(Integer, primary_key=True)
+    id = mapped_column(String(28), primary_key=True)
+    email = mapped_column(String(120), unique=True, nullable=False)
+    user_name = mapped_column(String(120), unique=True, nullable=False)
     age = mapped_column(Integer, nullable=False)
-    gender = mapped_column(String(10), nullable=False)
+    gender = mapped_column(String(8), nullable=False)
     height = mapped_column(Float, nullable=False)  # in centimeters
     weight = mapped_column(Float, nullable=False)  # in kilograms
     steps_taken = mapped_column(Integer, default=0)
