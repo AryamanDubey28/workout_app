@@ -14,7 +14,7 @@ class AllExercisesScreen extends StatelessWidget {
         title: const Text('All Exercises'),
       ),
       body: FutureBuilder<List<Map<String, dynamic>>>(
-        future: apiService.fetchExercises(), // Fetch exercises
+        future: apiService.getExercises(), // Fetch exercises
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
