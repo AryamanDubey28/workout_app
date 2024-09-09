@@ -72,15 +72,15 @@ class ApiService {
     }
   }
 
-  // Add a new exercise (Might require authorization based on your app's logic)
-  Future<void> addExercise(String name, List<String> musclesWorked,
+  Future<Map<String, dynamic>> addExercise(
+      String name, List<String> musclesWorked,
       {double? weight}) async {
     final idToken = await _getIdToken();
     final response = await http.post(
-      Uri.parse('$baseUrl/add_exercise'),
+      Uri.parse('$baseUrl/exercise'),
       headers: {
         'Content-Type': 'application/json',
-        if (idToken != null) 'Authorization': 'Bearer $idToken',
+        'Authorization': 'Bearer $idToken',
       },
       body: json.encode({
         'name': name,
@@ -89,16 +89,22 @@ class ApiService {
       }),
     );
 
-    if (response.statusCode != 201) {
+    if (response.statusCode == 201) {
+      return json.decode(response.body);
+    } else {
       throw Exception('Failed to add exercise');
     }
   }
 
   // Fetch all exercises (Might not require authorization if public)
-  Future<List<Map<String, dynamic>>> fetchExercises() async {
+  Future<List<Map<String, dynamic>>> getExercises() async {
+    final idToken = await _getIdToken();
     final response = await http.get(
-      Uri.parse('$baseUrl/exercises'),
-      headers: {'Content-Type': 'application/json'},
+      Uri.parse('$baseUrl/exercise'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $idToken',
+      },
     );
 
     if (response.statusCode == 200) {
@@ -109,21 +115,15 @@ class ApiService {
   }
 
   // Create a new user (Requires Authorization)
-  Future<Map<String, dynamic>> createUser(
-      int age, String gender, double height, double weight) async {
+  Future<Map<String, dynamic>> createUser(Map<String, dynamic> userData) async {
     final idToken = await _getIdToken();
     final response = await http.post(
-      Uri.parse('$baseUrl/user'),
+      Uri.parse('$baseUrl/auth/user'),
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $idToken',
       },
-      body: json.encode({
-        'age': age,
-        'gender': gender,
-        'height': height,
-        'weight': weight,
-      }),
+      body: json.encode(userData),
     );
 
     if (response.statusCode == 201) {
@@ -219,6 +219,98 @@ class ApiService {
       return List<Map<String, dynamic>>.from(json.decode(response.body));
     } else {
       throw Exception('Failed to load steps history');
+    }
+  }
+
+  Future<Map<String, dynamic>> createJournalEntry(
+      String userId, int stressLevel, String content) async {
+    final idToken = await _getIdToken();
+    final response = await http.post(
+      Uri.parse('$baseUrl/journal/$userId'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $idToken',
+      },
+      body: json.encode({
+        'stress_level': stressLevel,
+        'content': content,
+      }),
+    );
+
+    if (response.statusCode == 201) {
+      return json.decode(response.body);
+    } else {
+      throw Exception('Failed to create journal entry');
+    }
+  }
+
+  Future<List<Map<String, dynamic>>> getJournalEntries(String userId) async {
+    final idToken = await _getIdToken();
+    final response = await http.get(
+      Uri.parse('$baseUrl/journal/$userId'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $idToken',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      return List<Map<String, dynamic>>.from(json.decode(response.body));
+    } else {
+      throw Exception('Failed to load journal entries');
+    }
+  }
+
+  Future<Map<String, dynamic>> getJournalEntry(
+      String userId, int entryId) async {
+    final idToken = await _getIdToken();
+    final response = await http.get(
+      Uri.parse('$baseUrl/journal/$userId/$entryId'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $idToken',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+    } else {
+      throw Exception('Failed to load journal entry');
+    }
+  }
+
+  Future<void> updateJournalEntry(String userId, int entryId,
+      {int? stressLevel, String? content}) async {
+    final idToken = await _getIdToken();
+    final response = await http.put(
+      Uri.parse('$baseUrl/journal/$userId/$entryId'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $idToken',
+      },
+      body: json.encode({
+        if (stressLevel != null) 'stress_level': stressLevel,
+        if (content != null) 'content': content,
+      }),
+    );
+
+    if (response.statusCode != 200) {
+      throw Exception('Failed to update journal entry');
+    }
+  }
+
+  Future<void> deleteJournalEntry(String userId, int entryId) async {
+    final idToken = await _getIdToken();
+    final response = await http.delete(
+      Uri.parse('$baseUrl/journal/$userId/$entryId'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $idToken',
+      },
+    );
+
+    if (response.statusCode != 200) {
+      throw Exception('Failed to delete journal entry');
     }
   }
 }
