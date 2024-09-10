@@ -17,6 +17,31 @@ class ApiService {
     }
   }
 
+  Future<void> createUserInBackend(
+      String uid, String age, String email, String userName) async {
+    final url = Uri.parse('$baseUrl/auth/user');
+    final headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $uid', // Use Firebase UID as the token
+    };
+    final body = json.encode({
+      'age': int.parse(age),
+      'email': email,
+      'user_name': userName,
+    });
+
+    try {
+      final response = await http.post(url, headers: headers, body: body);
+      if (response.statusCode == 201) {
+        print('User created in backend');
+      } else {
+        throw Exception('Failed to create user in backend');
+      }
+    } catch (e) {
+      print('Error creating user in backend: $e');
+    }
+  }
+
   // Fetch the workout for today (Requires Authorization)
   Future<Map<String, dynamic>> fetchWorkout() async {
     final idToken = await _getIdToken();

@@ -11,8 +11,6 @@ def create_user():
     uid = verify_firebase_token()
     if not uid:
         return jsonify({"error": "Unauthorized"}), 401
-    # uid = generate_random_user_id()
-    # print(f"generated {uid}")
 
     existing_user = User.query.get(uid)
     if existing_user:

@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:adaptive_dialog/adaptive_dialog.dart';
+import 'package:workout_tracker/services/workout_service.dart';
 
 class RegisterPage extends StatefulWidget {
   final VoidCallback showLoginPage;
@@ -32,14 +33,17 @@ class _RegisterPageState extends State<RegisterPage> {
     super.dispose();
   }
 
-  Future signUp() async {
+  Future<void> signUp() async {
     if (passwordConfirmed()) {
       try {
-        // ignore: unused_local_variable
         UserCredential userCred = await FirebaseAuth.instance
             .createUserWithEmailAndPassword(
                 email: emailController.text.trim(),
                 password: passwordController.text.trim());
+        String userName =
+            '${firstNameController.text} ${lastNameController.text}';
+        await ApiService().createUserInBackend(userCred.user!.uid,
+            ageController.text, emailController.text, userName);
       } catch (e) {
         String outputString =
             e.toString().replaceAll(RegExp(r'\[.*?\]\s*'), '');
