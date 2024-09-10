@@ -33,6 +33,8 @@ class UserService {
 
   Future<void> updateUser(String userId,
       {int? age,
+      String? email,
+      String? user_name,
       String? gender,
       double? height,
       double? weight,
@@ -42,6 +44,8 @@ class UserService {
       '/user/$userId',
       body: {
         if (age != null) 'age': age,
+        if (email != null) 'email': email,
+        if (user_name != null) 'user_name': user_name,
         if (gender != null) 'gender': gender,
         if (height != null) 'height': height,
         if (weight != null) 'weight': weight,
