@@ -143,7 +143,7 @@ class CreateExerciseScreenState extends State<CreateExerciseScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => AllExercisesScreen(),
+                    builder: (context) => const AllExercisesScreen(),
                   ),
                 );
               },
