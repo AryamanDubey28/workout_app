@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:workout_tracker/pages/homepage_pages/workout_display.dart';
+import 'package:workout_tracker/services/api_client.dart';
 import 'package:workout_tracker/services/workout_service.dart';
 
 class HomePage extends StatefulWidget {
@@ -10,13 +11,25 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final ApiService apiService = ApiService();
+  late final WorkoutService workoutService;
   late Future<Map<String, dynamic>> _workout;
 
   @override
   void initState() {
     super.initState();
-    _workout = apiService.fetchWorkout();
+    workoutService =
+        WorkoutService(ApiClient(baseUrl: 'http://127.0.0.1:5000'));
+    _workout = _fetchWorkout();
+  }
+
+  Future<Map<String, dynamic>> _fetchWorkout() async {
+    try {
+      return await workoutService.fetchWorkout();
+    } catch (e) {
+      // You might want to log the error here
+      print(e.toString());
+      rethrow; // Rethrow to let FutureBuilder handle it
+    }
   }
 
   @override

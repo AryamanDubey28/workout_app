@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:workout_tracker/pages/homepage_pages/all_exercises.dart';
-import 'package:workout_tracker/services/workout_service.dart';
+import 'package:workout_tracker/services/api_client.dart';
+import 'package:workout_tracker/services/exercise_service.dart';
 import 'package:workout_tracker/utilities/platform_specific_button.dart';
 
 class CreateExerciseScreen extends StatefulWidget {
@@ -14,6 +15,14 @@ class CreateExerciseScreen extends StatefulWidget {
 class CreateExerciseScreenState extends State<CreateExerciseScreen> {
   final TextEditingController _exerciseNameController = TextEditingController();
   final Set<String> _selectedMuscles = {};
+  late final ExerciseService exerciseService;
+
+  @override
+  void initState() {
+    super.initState();
+    exerciseService =
+        ExerciseService(ApiClient(baseUrl: 'http://127.0.0.1:5000'));
+  }
 
   final List<Map<String, String>> _muscleGroups = [
     {'name': 'Chest', 'image': 'assets/images/muscle_groups/chest.png'},
@@ -45,11 +54,8 @@ class CreateExerciseScreenState extends State<CreateExerciseScreen> {
     if (_selectedMuscles.isNotEmpty &&
         _exerciseNameController.text.isNotEmpty) {
       try {
-        ApiService apiService = ApiService();
-        await apiService.addExercise(
-          _exerciseNameController.text,
-          _selectedMuscles.toList(),
-        );
+        await exerciseService.addExercise(
+            _exerciseNameController.text, _selectedMuscles.toList());
         if (!mounted) return;
         Navigator.pop(context, 'Exercise Saved');
       } catch (error) {

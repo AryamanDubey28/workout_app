@@ -1,7 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:adaptive_dialog/adaptive_dialog.dart';
-import 'package:workout_tracker/services/workout_service.dart';
+import 'package:workout_tracker/services/api_client.dart';
+import 'package:workout_tracker/services/user_service.dart';
 
 class RegisterPage extends StatefulWidget {
   final VoidCallback showLoginPage;
@@ -21,6 +22,9 @@ class _RegisterPageState extends State<RegisterPage> {
   final firstNameController = TextEditingController();
   final lastNameController = TextEditingController();
   final ageController = TextEditingController();
+
+  final UserService userService =
+      UserService(ApiClient(baseUrl: 'http://127.0.0.1:5000'));
 
   @override
   void dispose() {
@@ -42,7 +46,8 @@ class _RegisterPageState extends State<RegisterPage> {
                 password: passwordController.text.trim());
         String userName =
             '${firstNameController.text} ${lastNameController.text}';
-        await ApiService().createUserInBackend(userCred.user!.uid,
+
+        await userService.createUserInBackend(userCred.user!.uid,
             ageController.text, emailController.text, userName);
       } catch (e) {
         String outputString =
